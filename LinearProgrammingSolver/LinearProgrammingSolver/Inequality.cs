@@ -10,12 +10,12 @@ namespace LinearProgrammingSolver
     {
         public InequalitySign InequalityType { get; set; }
 
-        public Inequality(decimal[] coefficients, InequalitySign inequalityType, decimal knownTerm) : base(coefficients, knownTerm)
+        public Inequality(List<decimal> coefficients, InequalitySign inequalityType, decimal knownTerm) : base(coefficients, knownTerm)
         {
             InequalityType = inequalityType;
         }
 
-        public Inequality(decimal[] coefficients, InequalitySign inequalityType) : this(coefficients, inequalityType, 0)
+        public Inequality(List<decimal> coefficients, InequalitySign inequalityType) : this(coefficients, inequalityType, 0)
         {
         }
 

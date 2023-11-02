@@ -10,7 +10,7 @@ namespace LinearProgrammingSolver
     {
         public Equation ObjectiveFunction { get; private set; }
         public bool IsMinFunction { get; private set; }
-        public Inequality[] Costraints { get; private set; } 
+        public Inequality[] Costraints { get; set; } 
         public int TotalVariables { get; private set; }
         public int TotalCostraints { get; private set; }
         
