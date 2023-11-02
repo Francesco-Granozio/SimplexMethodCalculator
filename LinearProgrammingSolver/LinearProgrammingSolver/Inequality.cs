@@ -19,6 +19,20 @@ namespace LinearProgrammingSolver
         {
         }
 
+        public override void InvertSigns()
+        {
+            base.InvertSigns();
+
+            if (InequalityType == InequalitySign.LessThanOrEqual)
+            {
+                InequalityType = InequalitySign.GreaterThanOrEqual;
+            }
+            else if (InequalityType == InequalitySign.GreaterThanOrEqual)
+            {
+                InequalityType = InequalitySign.LessThanOrEqual;
+            }
+        }
+
         public override string ToString()
         {
             StringBuilder sb = new StringBuilder();
@@ -39,12 +53,6 @@ namespace LinearProgrammingSolver
                     break;
             }
 
-            // Aggiungi il termine noto con il suo segno
-            if (KnownTerm < 0)
-            {
-                sb.Append(" - ");
-                KnownTerm = Math.Abs(KnownTerm);
-            }
             sb.Append(KnownTerm);
 
             return sb.ToString();

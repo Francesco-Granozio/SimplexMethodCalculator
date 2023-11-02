@@ -13,17 +13,20 @@ namespace LinearProgrammingSolver
         public Inequality[] Costraints { get; private set; } 
         public int TotalVariables { get; private set; }
         public int TotalCostraints { get; private set; }
-        //public InequalitySign[] VariablesSignCostraints { get; private set; }
 
         public LinearProgrammingProblem(Equation objectiveFunction, bool isMinFunction, Inequality[] costraints, 
-            int totalVariables, int totalCostraints/*, InequalitySign[] variablesSignCostraints*/)
+            int totalVariables, int totalCostraints)
         {
             ObjectiveFunction = objectiveFunction;
             IsMinFunction = isMinFunction;
             Costraints = costraints;
             TotalVariables = totalVariables;
             TotalCostraints = totalCostraints;
-            //VariablesSignCostraints = variablesSignCostraints;
+        }
+
+        public void ToStandardForm()
+        {
+            
         }
 
         public override string ToString()

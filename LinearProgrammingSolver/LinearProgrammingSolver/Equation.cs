@@ -23,6 +23,12 @@ namespace LinearProgrammingSolver
         {
         }
 
+        public virtual void InvertSigns()
+        {
+            Coefficients = Coefficients.Select(coefficient => -coefficient).ToArray();
+            KnownTerm = -KnownTerm;
+        }
+
         public override string ToString()
         {
             StringBuilder sb = new StringBuilder();
@@ -52,18 +58,10 @@ namespace LinearProgrammingSolver
                 sb.Append(i + 1);
             }
 
-            sb.Append(" = ");
-
-            if (KnownTerm < 0)
-            { 
-                sb.Append(" - ");
-                KnownTerm = Math.Abs(KnownTerm);
-            }
-            sb.Append(KnownTerm);
-
+            sb.Append(" = ").Append(KnownTerm);
+            
             return sb.ToString();
         }
-
-      
+        
     }
 }

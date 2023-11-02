@@ -19,7 +19,7 @@ namespace LinearProgrammingSolver
 
         private void FormInserimento_Load(object sender, EventArgs e)
         {
-            LinearProgrammingProblem lp = new LinearProgrammingProblem(
+            /*LinearProgrammingProblem lp = new LinearProgrammingProblem(
                 new Equation(new decimal[] { 5, 10, 8 }), 
                 true, 
                 new Inequality[] { new Inequality(new decimal[] { 3, 5, 2 }, InequalitySign.GreaterThanOrEqual, 60m),
@@ -29,7 +29,17 @@ namespace LinearProgrammingSolver
                 3, 
                 3);
             
-            Console.WriteLine(lp);
+            Console.WriteLine(lp);*/
+
+            /*Equation eq = new Equation(new decimal[] { 5, 10, 8 }, 2);
+            Console.WriteLine(eq);
+            eq.InvertSigns();
+            Console.WriteLine(eq);*/
+
+            Inequality eq = new Inequality(new decimal[] { 3, 5, 2 }, InequalitySign.GreaterThanOrEqual, 60m);
+            Console.WriteLine(eq);
+            eq.InvertSigns();
+            Console.WriteLine(eq);
         }
     }
 }
