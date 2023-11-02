@@ -13,6 +13,7 @@ namespace LinearProgrammingSolver
         public Inequality[] Costraints { get; private set; } 
         public int TotalVariables { get; private set; }
         public int TotalCostraints { get; private set; }
+        
 
         public LinearProgrammingProblem(Equation objectiveFunction, bool isMinFunction, Inequality[] costraints, 
             int totalVariables, int totalCostraints)
@@ -24,15 +25,12 @@ namespace LinearProgrammingSolver
             TotalCostraints = totalCostraints;
         }
 
-        public void ToStandardForm()
-        {
-            
-        }
 
         public override string ToString()
         {
             StringBuilder sb = new StringBuilder();
 
+            //sb.Append(IsMinFunction ? (hasObjectiveFunctionSignChanged ? "-min Z = " : "min Z = ") : "max Z = ");
             sb.Append(IsMinFunction ? "min Z = " : "max Z = ");
 
             sb.Append(ObjectiveFunction.ToString().Split('=')[0]).Append("\nsubject to\n");
