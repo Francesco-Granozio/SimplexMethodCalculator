@@ -19,9 +19,17 @@ namespace LinearProgrammingSolver
 
         private void FormInserimento_Load(object sender, EventArgs e)
         {
-            Equation eq = new Equation(new decimal[] { -5, -10, -4 });
-
-            Console.WriteLine(eq);
+            LinearProgrammingProblem lp = new LinearProgrammingProblem(
+                new Equation(new decimal[] { 5, 10, 8 }), 
+                true, 
+                new Inequality[] { new Inequality(new decimal[] { 3, 5, 2 }, InequalitySign.GreaterThanOrEqual, 60m),
+                                   new Inequality(new decimal[] { 4, 4, 4 }, InequalitySign.GreaterThanOrEqual, 72m),
+                                   new Inequality(new decimal[] { 2, 4, 5 }, InequalitySign.GreaterThanOrEqual, 100)
+                                 },
+                3, 
+                3);
+            
+            Console.WriteLine(lp);
         }
     }
 }

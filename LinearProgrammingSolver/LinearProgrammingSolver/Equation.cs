@@ -43,7 +43,11 @@ namespace LinearProgrammingSolver
                     }
                 }
 
-                sb.Append(coefficient);
+                if (coefficient != 1 && coefficient != -1)
+                {
+                    sb.Append(coefficient);
+                }
+                    
                 sb.Append("x");
                 sb.Append(i + 1);
             }

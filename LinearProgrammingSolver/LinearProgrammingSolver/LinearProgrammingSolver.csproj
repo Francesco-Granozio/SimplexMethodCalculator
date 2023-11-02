@@ -57,7 +57,7 @@
     <Compile Include="InequalitySign.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Simplex.cs" />
+    <Compile Include="LinearProgrammingProblem.cs" />
     <EmbeddedResource Include="FormInserimento.resx">
       <DependentUpon>FormInserimento.cs</DependentUpon>
     </EmbeddedResource>

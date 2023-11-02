@@ -23,26 +23,7 @@ namespace LinearProgrammingSolver
         {
             StringBuilder sb = new StringBuilder();
 
-            for (int i = 0; i < Coefficients.Length; i++)
-            {
-                decimal coefficient = Coefficients[i];
-                if (i > 0)
-                {
-                    if (coefficient >= 0)
-                    {
-                        sb.Append(" + ");
-                    }
-                    else
-                    {
-                        sb.Append(" - ");
-                        coefficient = Math.Abs(coefficient);
-                    }
-                }
-
-                sb.Append(coefficient);
-                sb.Append("x");
-                sb.Append(i + 1);
-            }
+            sb.Append(base.ToString().Split(new string[] { " =" }, StringSplitOptions.None)[0]);
 
             // Aggiungi il segno in base all'InequalityType
             switch (InequalityType)

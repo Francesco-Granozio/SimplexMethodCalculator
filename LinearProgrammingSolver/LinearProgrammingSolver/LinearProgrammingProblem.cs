@@ -13,25 +13,34 @@ namespace LinearProgrammingSolver
         public Inequality[] Costraints { get; private set; } 
         public int TotalVariables { get; private set; }
         public int TotalCostraints { get; private set; }
-        public InequalitySign[] VariablesSignCostraints { get; private set; }
+        //public InequalitySign[] VariablesSignCostraints { get; private set; }
 
         public LinearProgrammingProblem(Equation objectiveFunction, bool isMinFunction, Inequality[] costraints, 
-            int totalVariables, int totalCostraints, InequalitySign[] variablesSignCostraints)
+            int totalVariables, int totalCostraints/*, InequalitySign[] variablesSignCostraints*/)
         {
             ObjectiveFunction = objectiveFunction;
             IsMinFunction = isMinFunction;
             Costraints = costraints;
-            TotalVariables = TotalVariables;
+            TotalVariables = totalVariables;
             TotalCostraints = totalCostraints;
-            VariablesSignCostraints = variablesSignCostraints;
+            //VariablesSignCostraints = variablesSignCostraints;
         }
 
         public override string ToString()
         {
             StringBuilder sb = new StringBuilder();
 
-            
+            sb.Append(IsMinFunction ? "min Z = " : "max Z = ");
 
+            sb.Append(ObjectiveFunction.ToString().Split('=')[0]).Append("\nsubject to\n");
+            
+            foreach (var costraint in Costraints)
+            {
+                sb.Append(costraint).Append("\n");
+            }
+            
+            sb.Append("and ").Append(string.Join(", ", Enumerable.Range(1, TotalVariables).Select(i => $"x{i} >= 0")));
+            
             return sb.ToString();
         }
     }
