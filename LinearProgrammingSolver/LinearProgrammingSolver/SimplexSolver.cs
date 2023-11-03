@@ -50,37 +50,40 @@ namespace LinearProgrammingSolver
 
         private void AddSlackAndSurplusVariables()
         {
-            for (int i = 0; i < nonStandardLp.Costraints.Length; i++)
+            for (int i = 0, index = 0; i < nonStandardLp.Costraints.Length; i++)
             {
                 if (nonStandardLp.Costraints[i].InequalityType == InequalitySign.LessThanOrEqual)
                 {
+                    for (int j = 0; j < index; j++)
+                    {
+                        standardLp.Costraints[i].Coefficients.Add(0);
+                    }
+
                     standardLp.Costraints[i].Coefficients.Add(1);
+                    index++;
                     standardLp.Costraints[i].InequalityType = InequalitySign.Equal;
                     standardLp.TotalVariables++;
                 }
                 else if (nonStandardLp.Costraints[i].InequalityType == InequalitySign.GreaterThanOrEqual)
                 {
+
+                    for (int j = 0; j < index; j++)
+                    {
+                        standardLp.Costraints[i].Coefficients.Add(0);
+                    }
+                    
                     standardLp.Costraints[i].Coefficients.Add(-1);
+                    index++;
                     standardLp.Costraints[i].InequalityType = InequalitySign.Equal;
                     standardLp.TotalVariables++;
                 }
             }
         }
-        
+
         public override string ToString()
         {
-            StringBuilder sb = new StringBuilder();
-
-            if (hasObjectiveFunctionSignChanged)
-            {
-                sb.Append("-min ");
-            }
-
-            sb.Append(standardLp.ObjectiveFunction.ToString().Split('=')[0]).Append("\nsubject to\n");
-            int lastVariableIndex = nonStandardLp.TotalVariables;
-
-            Console.WriteLine(lastVariableIndex);
-            return sb.ToString();
+            return hasObjectiveFunctionSignChanged ? standardLp.ToString().Replace("max ", "-min ") : standardLp.ToString();
         }
+
     }
 }

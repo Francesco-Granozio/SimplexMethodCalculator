@@ -33,7 +33,7 @@ namespace LinearProgrammingSolver
             }
         }
 
-        public Inequality Clone()
+        public new Inequality Clone()
         {
             List<decimal> clonedCoefficients = new List<decimal>(Coefficients);
             return new Inequality(clonedCoefficients, InequalityType, KnownTerm);

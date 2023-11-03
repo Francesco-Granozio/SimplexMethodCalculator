@@ -28,6 +28,23 @@ namespace LinearProgrammingSolver
             KnownTerm = -KnownTerm;
         }
 
+
+        public virtual decimal this[string variableName]
+        {
+            get
+            {
+                int variableIndex = int.Parse(variableName.Substring(1)) - 1;
+                return Coefficients[variableIndex];
+            }
+            set
+            {
+                int variableIndex = int.Parse(variableName.Substring(1)) - 1;
+                Coefficients[variableIndex] = value;
+            }
+        }
+
+
+
         public Equation Clone()
         {
             List<decimal> clonedCoefficients = new List<decimal>(Coefficients);

@@ -23,6 +23,14 @@ namespace LinearProgrammingSolver
             Costraints = costraints;
             TotalVariables = totalVariables;
             TotalCostraints = totalCostraints;
+
+            for (int i = 0; i < Costraints.Length; i++)
+            {
+                if (Costraints[i].Coefficients.Count < TotalVariables)
+                {
+                    Costraints[i].Coefficients.AddRange(Enumerable.Repeat(0m, TotalVariables - Costraints[i].Coefficients.Count));
+                }
+            }
         }
 
         public LinearProgrammingProblem Clone()

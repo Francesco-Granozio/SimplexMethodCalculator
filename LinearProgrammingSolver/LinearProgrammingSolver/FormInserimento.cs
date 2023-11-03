@@ -19,7 +19,6 @@ namespace LinearProgrammingSolver
 
         private void FormInserimento_Load(object sender, EventArgs e)
         {
-           
             List<decimal> objectiveCoefficients = new List<decimal> { 4, 2, 1 };
             Inequality []constraints = new Inequality[]
             {
@@ -36,10 +35,12 @@ namespace LinearProgrammingSolver
                 constraints.Length);
 
             Console.WriteLine(lp);
+
             Console.WriteLine();
             SimplexSolver solver = new SimplexSolver(lp);
             solver.Solve();
             Console.WriteLine(solver);
+
         }
     }
 }
