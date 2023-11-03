@@ -19,12 +19,13 @@ namespace LinearProgrammingSolver
 
         private void FormInserimento_Load(object sender, EventArgs e)
         {
-            List<decimal> objectiveCoefficients = new List<decimal> { 5, 10, 8 };
+           
+            List<decimal> objectiveCoefficients = new List<decimal> { 4, 2, 1 };
             Inequality []constraints = new Inequality[]
             {
-                new Inequality(new List<decimal> { 3, 5, 2 }, InequalitySign.GreaterThanOrEqual, -60m),
-                new Inequality(new List<decimal> { 4, 4, 4 }, InequalitySign.GreaterThanOrEqual, 72m),
-                new Inequality(new List<decimal> { 2, 4, 5 }, InequalitySign.GreaterThanOrEqual, -100m)
+                new Inequality(new List<decimal> { -3, 1 }, InequalitySign.LessThanOrEqual, 1),
+                new Inequality(new List<decimal> { 1, -2, 1 }, InequalitySign.LessThanOrEqual, 5),
+                new Inequality(new List<decimal> { -1, 1, 1 }, InequalitySign.LessThanOrEqual, 3)
             };
 
             LinearProgrammingProblem lp = new LinearProgrammingProblem(

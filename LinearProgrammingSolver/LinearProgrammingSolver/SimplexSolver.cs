@@ -54,20 +54,50 @@ namespace LinearProgrammingSolver
             {
                 if (nonStandardLp.Costraints[i].InequalityType == InequalitySign.LessThanOrEqual)
                 {
+                    standardLp.Costraints[i].Coefficients.Add(1);
+                    standardLp.Costraints[i].InequalityType = InequalitySign.Equal;
+                    standardLp.TotalVariables++;
+                }
+                else if (nonStandardLp.Costraints[i].InequalityType == InequalitySign.GreaterThanOrEqual)
+                {
+                    standardLp.Costraints[i].Coefficients.Add(-1);
+                    standardLp.Costraints[i].InequalityType = InequalitySign.Equal;
+                    standardLp.TotalVariables++;
                 }
             }
         }
         
         public override string ToString()
         {
-            string s = standardLp.ToString();
+            StringBuilder sb = new StringBuilder();
 
             if (hasObjectiveFunctionSignChanged)
             {
-                s = s.Replace("max", "-min");
+                sb.Append("-min ");
             }
 
-            return s;
+            sb.Append(standardLp.ObjectiveFunction.ToString().Split('=')[0]).Append("\nsubject to\n");
+            int lastVariableIndex = standardLp.TotalVariables;
+
+            foreach (var costraint in standardLp.Costraints)
+            {
+                var coefficients = costraint.Coefficients;
+                List<string> constraintVariables = new List<string>();
+
+                for (int i = 0; i < coefficients.Count; i++)
+                {
+                    if (coefficients[i] != 0)
+                    {
+                        lastVariableIndex++;
+                        constraintVariables.Add($"x{lastVariableIndex}");
+                    }
+                }
+
+                string constraintText = string.Join(" + ", constraintVariables);
+                sb.Append(constraintText).Append(" = ").Append(costraint.KnownTerm).Append("\n");
+
+            }
+            return sb.ToString();
         }
     }
 }

@@ -11,7 +11,7 @@ namespace LinearProgrammingSolver
         public Equation ObjectiveFunction { get; private set; }
         public bool IsMinFunction { get; private set; }
         public Inequality[] Costraints { get; set; } 
-        public int TotalVariables { get; private set; }
+        public int TotalVariables { get; set; }
         public int TotalCostraints { get; private set; }
         
 
@@ -30,7 +30,6 @@ namespace LinearProgrammingSolver
         {
             StringBuilder sb = new StringBuilder();
 
-            //sb.Append(IsMinFunction ? (hasObjectiveFunctionSignChanged ? "-min Z = " : "min Z = ") : "max Z = ");
             sb.Append(IsMinFunction ? "min Z = " : "max Z = ");
 
             sb.Append(ObjectiveFunction.ToString().Split('=')[0]).Append("\nsubject to\n");
