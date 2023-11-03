@@ -25,6 +25,14 @@ namespace LinearProgrammingSolver
             TotalCostraints = totalCostraints;
         }
 
+        public LinearProgrammingProblem Clone()
+        {
+            Equation clonedObjectiveFunction = ObjectiveFunction.Clone();
+            Inequality[] clonedCostraints = Costraints.Select(c => c.Clone()).ToArray();
+
+            return new LinearProgrammingProblem(clonedObjectiveFunction, IsMinFunction, clonedCostraints, TotalVariables, TotalCostraints);
+        }
+
 
         public override string ToString()
         {

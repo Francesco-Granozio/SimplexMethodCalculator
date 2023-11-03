@@ -28,6 +28,12 @@ namespace LinearProgrammingSolver
             KnownTerm = -KnownTerm;
         }
 
+        public Equation Clone()
+        {
+            List<decimal> clonedCoefficients = new List<decimal>(Coefficients);
+            return new Equation(clonedCoefficients, KnownTerm);
+        }
+
         public override string ToString()
         {
             StringBuilder sb = new StringBuilder();

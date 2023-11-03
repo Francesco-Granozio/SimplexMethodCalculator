@@ -33,6 +33,12 @@ namespace LinearProgrammingSolver
             }
         }
 
+        public Inequality Clone()
+        {
+            List<decimal> clonedCoefficients = new List<decimal>(Coefficients);
+            return new Inequality(clonedCoefficients, InequalityType, KnownTerm);
+        }
+
         public override string ToString()
         {
             StringBuilder sb = new StringBuilder();

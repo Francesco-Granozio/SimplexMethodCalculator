@@ -13,8 +13,8 @@ namespace LinearProgrammingSolver
 
         public SimplexSolver(LinearProgrammingProblem lp)
         {
-            this.nonStandardLp = lp;
-            this.standardLp = lp;
+            this.nonStandardLp = lp.Clone();
+            this.standardLp = lp.Clone();
         }
 
         public void Solve()
@@ -77,26 +77,9 @@ namespace LinearProgrammingSolver
             }
 
             sb.Append(standardLp.ObjectiveFunction.ToString().Split('=')[0]).Append("\nsubject to\n");
-            int lastVariableIndex = standardLp.TotalVariables;
+            int lastVariableIndex = nonStandardLp.TotalVariables;
 
-            foreach (var costraint in standardLp.Costraints)
-            {
-                var coefficients = costraint.Coefficients;
-                List<string> constraintVariables = new List<string>();
-
-                for (int i = 0; i < coefficients.Count; i++)
-                {
-                    if (coefficients[i] != 0)
-                    {
-                        lastVariableIndex++;
-                        constraintVariables.Add($"x{lastVariableIndex}");
-                    }
-                }
-
-                string constraintText = string.Join(" + ", constraintVariables);
-                sb.Append(constraintText).Append(" = ").Append(costraint.KnownTerm).Append("\n");
-
-            }
+            Console.WriteLine(lastVariableIndex);
             return sb.ToString();
         }
     }
