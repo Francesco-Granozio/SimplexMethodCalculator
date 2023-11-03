@@ -58,31 +58,35 @@ namespace LinearProgrammingSolver
             for (int i = 0; i < Coefficients.Count; i++)
             {
                 decimal coefficient = Coefficients[i];
-                if (i > 0)
+                if (coefficient != 0) // Escludi i coefficienti nulli o zero
                 {
-                    if (coefficient >= 0)
+                    if (sb.Length > 0) // Aggiungi "+" solo se non è il primo termine
                     {
-                        sb.Append(" + ");
+                        if (coefficient > 0)
+                        {
+                            sb.Append(" + ");
+                        }
+                        else
+                        {
+                            sb.Append(" - ");
+                            coefficient = Math.Abs(coefficient);
+                        }
                     }
-                    else
+
+                    if (coefficient != 1 && coefficient != -1)
                     {
-                        sb.Append(" - ");
-                        coefficient = Math.Abs(coefficient);
+                        sb.Append(coefficient);
                     }
-                }
 
-                if (coefficient != 1 && coefficient != -1)
-                {
-                    sb.Append(coefficient);
+                    sb.Append("x");
+                    sb.Append(i + 1);
                 }
-
-                sb.Append("x");
-                sb.Append(i + 1);
             }
 
             sb.Append(" = ").Append(KnownTerm);
 
             return sb.ToString();
         }
+
     }
 }

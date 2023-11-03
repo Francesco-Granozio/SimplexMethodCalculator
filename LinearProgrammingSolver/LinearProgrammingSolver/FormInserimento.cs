@@ -40,7 +40,6 @@ namespace LinearProgrammingSolver
             SimplexSolver solver = new SimplexSolver(lp);
             solver.Solve();
             Console.WriteLine(solver);
-
         }
     }
 }
