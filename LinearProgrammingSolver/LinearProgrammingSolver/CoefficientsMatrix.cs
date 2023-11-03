@@ -9,6 +9,8 @@ namespace LinearProgrammingSolver
     internal class CoefficientsMatrix
     {
         public decimal[,] Coefficients { get; set; }
+        public int TotalRows { get => Coefficients.GetLength(0); }
+        public int TotalColumns { get => Coefficients.GetLength(1); }
 
         public CoefficientsMatrix(LinearProgrammingProblem lp)
         {
@@ -26,6 +28,18 @@ namespace LinearProgrammingSolver
                 {
                     Coefficients[constraintIndex, i] = constraint.Coefficients[i];
                 }
+            }
+        }
+
+        public decimal this[int i, int j]
+        {
+            get
+            {
+                return Coefficients[i, j];
+            }
+            set
+            {
+                Coefficients[i, j] = value;
             }
         }
 

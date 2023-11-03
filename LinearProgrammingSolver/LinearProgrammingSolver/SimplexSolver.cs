@@ -11,6 +11,9 @@ namespace LinearProgrammingSolver
         private LinearProgrammingProblem nonStandardLp, standardLp;
         private bool hasObjectiveFunctionSignChanged = false;
         private CoefficientsMatrix coefficientsMatrix;
+        private decimal[] cTransposed;
+        private int[] baseVariables;
+        private int[] nonBaseVariables;
         private bool isSolved = false;
 
         public SimplexSolver(LinearProgrammingProblem lp)
@@ -48,10 +51,73 @@ namespace LinearProgrammingSolver
             // aggiungo le variabili di slack e di surplus
             
             AddSlackAndSurplusVariables();
+
+            //costruisco la matrice dei coefficienti tecnologici e il vettore c dei coefficienti di costo
+
             coefficientsMatrix = new CoefficientsMatrix(standardLp);
 
+            cTransposed = standardLp.ObjectiveFunction.Coefficients.Concat(
+                Enumerable.Repeat(0m, standardLp.TotalVariables - standardLp.ObjectiveFunction.TotalVariables)).ToArray();
+
+            // cerco una base ammissibile
+            //TODO: implementare il metodo delle 2 fasi
+            
+            (baseVariables, nonBaseVariables) = FindBase();
+
+           
             isSolved = true;
         }
+
+        private (int[], int[]) FindBase()
+        {
+            int numRows = coefficientsMatrix.TotalRows;
+            int numCols = coefficientsMatrix.TotalColumns;
+            int numIdentityColumns = Math.Min(numRows, numCols);
+
+            List<int> baseColumns = new List<int>();
+            List<int> nonBaseColumns = new List<int>();
+
+            for (int col = 0; col < numIdentityColumns; col++)
+            {
+                // Verifica se la colonna è una colonna della matrice identità
+                bool isBaseColumn = true;
+
+                for (int row = 0; row < numRows; row++)
+                {
+                    decimal element = coefficientsMatrix[row, col];
+
+                    if (row == col)
+                    {
+                        if (element != 1)
+                        {
+                            isBaseColumn = false;
+                            break;
+                        }
+                    }
+                    else
+                    {
+                        if (element != 0)
+                        {
+                            isBaseColumn = false;
+                            break;
+                        }
+                    }
+                }
+
+                if (isBaseColumn)
+                {
+                    baseColumns.Add(col);
+                }
+                else
+                {
+                    nonBaseColumns.Add(col);
+                }
+            }
+
+            Console.WriteLine("Base columns: " + string.Join(", ", baseColumns));
+            return (baseColumns.ToArray(), nonBaseColumns.ToArray());
+        }
+
 
         private void AddSlackAndSurplusVariables()
         {
@@ -96,30 +162,15 @@ namespace LinearProgrammingSolver
             sb.Append("\n\nconverted in standard form:\n\n");
             sb.Append(hasObjectiveFunctionSignChanged ? standardLp.ToString().Replace("max ", "-min ") : standardLp.ToString());
 
-            sb.Append("\n\nCoefficients matrix:\n\n");
+            sb.Append("\n\nCoefficients matrix (A):\n\n");
             sb.Append(coefficientsMatrix);
 
-            sb.Append("\n\nCost coefficients:\n\n");
-            sb.Append("[");
+            sb.Append("\n\nCost coefficients (c^T):\n\n");
+            sb.Append("[").Append(cTransposed.Any() ? string.Join(", ", cTransposed) : "").Append("]");
 
-            if (standardLp.ObjectiveFunction.Coefficients.Any())
-            {
-                sb.Append(string.Join(", ", standardLp.ObjectiveFunction.Coefficients));
-                sb.Append(", ");
-            }
 
-            int numZerosToAdd = standardLp.TotalVariables - standardLp.ObjectiveFunction.TotalVariables;
-
-            for (int i = 0; i < numZerosToAdd; i++)
-            {
-                sb.Append("0");
-                if (i < numZerosToAdd - 1)
-                {
-                    sb.Append(", ");
-                }
-            }
-
-            sb.Append("]");
+            sb.Append("\n\nBase variables index:\n\n");
+            sb.Append("[").Append(baseVariables.Any() ? string.Join(", ", baseVariables) : "").Append("]");
 
             return sb.ToString();
         }
