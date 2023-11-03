@@ -10,6 +10,8 @@ namespace LinearProgrammingSolver
     {
         private LinearProgrammingProblem nonStandardLp, standardLp;
         private bool hasObjectiveFunctionSignChanged = false;
+        private CoefficientsMatrix coefficientsMatrix;
+        private bool isSolved = false;
 
         public SimplexSolver(LinearProgrammingProblem lp)
         {
@@ -46,6 +48,9 @@ namespace LinearProgrammingSolver
             // aggiungo le variabili di slack e di surplus
             
             AddSlackAndSurplusVariables();
+            coefficientsMatrix = new CoefficientsMatrix(standardLp);
+
+            isSolved = true;
         }
 
         private void AddSlackAndSurplusVariables()
@@ -82,7 +87,41 @@ namespace LinearProgrammingSolver
 
         public override string ToString()
         {
-            return hasObjectiveFunctionSignChanged ? standardLp.ToString().Replace("max ", "-min ") : standardLp.ToString();
+            if (!isSolved)
+            {
+                return "The problem has not been solved yet";
+            }
+
+            StringBuilder sb = new StringBuilder(nonStandardLp.ToString());
+            sb.Append("\n\nconverted in standard form:\n\n");
+            sb.Append(hasObjectiveFunctionSignChanged ? standardLp.ToString().Replace("max ", "-min ") : standardLp.ToString());
+
+            sb.Append("\n\nCoefficients matrix:\n\n");
+            sb.Append(coefficientsMatrix);
+
+            sb.Append("\n\nCost coefficients:\n\n");
+            sb.Append("[");
+
+            if (standardLp.ObjectiveFunction.Coefficients.Any())
+            {
+                sb.Append(string.Join(", ", standardLp.ObjectiveFunction.Coefficients));
+                sb.Append(", ");
+            }
+
+            int numZerosToAdd = standardLp.TotalVariables - standardLp.ObjectiveFunction.TotalVariables;
+
+            for (int i = 0; i < numZerosToAdd; i++)
+            {
+                sb.Append("0");
+                if (i < numZerosToAdd - 1)
+                {
+                    sb.Append(", ");
+                }
+            }
+
+            sb.Append("]");
+
+            return sb.ToString();
         }
 
     }

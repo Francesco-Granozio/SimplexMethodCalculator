@@ -34,12 +34,12 @@ namespace LinearProgrammingSolver
                 objectiveCoefficients.Count,
                 constraints.Length);
 
-            Console.WriteLine(lp);
 
-            Console.WriteLine();
             SimplexSolver solver = new SimplexSolver(lp);
             solver.Solve();
             Console.WriteLine(solver);
+
+
         }
     }
 }
