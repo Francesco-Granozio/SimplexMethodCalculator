@@ -36,13 +36,15 @@ namespace LinearProgrammingSolver
             int numConstraints = lp.Costraints.Length;
             int numVariables = columns.Count;
 
+            Coefficients = new decimal[numConstraints, numVariables];
+
             foreach (var constraint in lp.Costraints)
             {
-                Console.WriteLine($"Constraint: {constraint}");
+                int constraintIndex = Array.IndexOf(lp.Costraints, constraint);
+                
                 for (int i = 0; i < columns.Count; i++)
                 {
-                    Console.WriteLine($"Indice variabili base: {columns[i]}");
-                    Console.WriteLine(constraint["x" + columns[i]]);
+                    Coefficients[constraintIndex, i] = constraint.Coefficients[columns[i]];
                 }
                 
             }
@@ -104,7 +106,7 @@ namespace LinearProgrammingSolver
                 sb.Append("[");
                 for (int j = 0; j < numCols; j++)
                 {
-                    sb.Append(Coefficients[i, j]);
+                    sb.Append(Coefficients[i, j].ToString("0.##"));
 
                     if (j < numCols - 1)
                     {

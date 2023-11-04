@@ -59,7 +59,7 @@ namespace LinearProgrammingSolver
                     break;
             }
 
-            sb.Append(KnownTerm);
+            sb.Append(KnownTerm.ToString("0.##"));
 
             return sb.ToString();
         }

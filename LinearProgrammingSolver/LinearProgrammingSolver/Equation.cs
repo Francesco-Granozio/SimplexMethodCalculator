@@ -14,6 +14,7 @@ namespace LinearProgrammingSolver
 
         public Equation(List<decimal> coefficients, decimal knownTerm)
         {
+
             Coefficients = coefficients;
             KnownTerm = knownTerm;
         }
@@ -75,7 +76,7 @@ namespace LinearProgrammingSolver
 
                     if (coefficient != 1 && coefficient != -1)
                     {
-                        sb.Append(coefficient);
+                        sb.Append(coefficient.ToString("0.##"));
                     }
 
                     sb.Append("x");

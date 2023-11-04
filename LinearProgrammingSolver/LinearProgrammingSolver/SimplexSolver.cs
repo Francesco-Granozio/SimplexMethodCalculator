@@ -27,6 +27,28 @@ namespace LinearProgrammingSolver
         public void Solve()
         {
             ConvertProblemToStandardForm();
+            SetupSimplex();
+        }
+
+        private void SetupSimplex()
+        {
+            //costruisco la matrice dei coefficienti tecnologici e il vettore c dei coefficienti di costo
+
+            coefficientsMatrix = new CoefficientsMatrix(standardLp);
+
+            cTransposed = standardLp.ObjectiveFunction.Coefficients.Concat(
+                Enumerable.Repeat(0m, standardLp.TotalVariables - standardLp.ObjectiveFunction.TotalVariables)).ToArray();
+
+            // cerco una base ammissibile
+            //TODO: implementare il metodo delle 2 fasi
+
+            FindBase();
+
+            // creo la matice di base
+
+            A_b = new CoefficientsMatrix(standardLp, baseVariables);
+
+            isSolved = true;
         }
 
         private void ConvertProblemToStandardForm()
@@ -53,28 +75,8 @@ namespace LinearProgrammingSolver
             // aggiungo le variabili di slack e di surplus
             
             AddSlackAndSurplusVariables();
-
-            //costruisco la matrice dei coefficienti tecnologici e il vettore c dei coefficienti di costo
-
-            coefficientsMatrix = new CoefficientsMatrix(standardLp);
-
-            cTransposed = standardLp.ObjectiveFunction.Coefficients.Concat(
-                Enumerable.Repeat(0m, standardLp.TotalVariables - standardLp.ObjectiveFunction.TotalVariables)).ToArray();
-
-            // cerco una base ammissibile
-            //TODO: implementare il metodo delle 2 fasi
-            
-            FindBase();
-
-            // creo la matice di base
-
-            //A_b = new CoefficientsMatrix(standardLp, baseVariables);
-
-            isSolved = true;
         }
 
-        
-        
         private void FindBase()
         {
             int numCols = coefficientsMatrix.TotalColumns;
