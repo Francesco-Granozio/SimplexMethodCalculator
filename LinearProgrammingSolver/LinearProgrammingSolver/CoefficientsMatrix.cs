@@ -31,6 +31,23 @@ namespace LinearProgrammingSolver
             }
         }
 
+        public CoefficientsMatrix(LinearProgrammingProblem lp, List<int> columns)
+        {
+            int numConstraints = lp.Costraints.Length;
+            int numVariables = columns.Count;
+
+            foreach (var constraint in lp.Costraints)
+            {
+                Console.WriteLine($"Constraint: {constraint}");
+                for (int i = 0; i < columns.Count; i++)
+                {
+                    Console.WriteLine($"Indice variabili base: {columns[i]}");
+                    Console.WriteLine(constraint["x" + columns[i]]);
+                }
+                
+            }
+        }
+
         public decimal this[int i, int j]
         {
             get

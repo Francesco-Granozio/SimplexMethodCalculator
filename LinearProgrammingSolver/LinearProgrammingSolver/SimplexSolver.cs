@@ -14,6 +14,8 @@ namespace LinearProgrammingSolver
         private decimal[] cTransposed;
         private List<int> baseVariables = new List<int>();
         private List<int> nonBaseVariables = new List<int>();
+        private decimal[] c_b_Transposed;
+        private CoefficientsMatrix A_b;
         private bool isSolved = false;
 
         public SimplexSolver(LinearProgrammingProblem lp)
@@ -64,10 +66,15 @@ namespace LinearProgrammingSolver
             
             FindBase();
 
-           
+            // creo la matice di base
+
+            //A_b = new CoefficientsMatrix(standardLp, baseVariables);
+
             isSolved = true;
         }
 
+        
+        
         private void FindBase()
         {
             int numCols = coefficientsMatrix.TotalColumns;
@@ -102,37 +109,49 @@ namespace LinearProgrammingSolver
                     nonBaseVariables.Add(i);
                 }
             }
+            c_b_Transposed = cTransposed.Where((x, i) => baseVariables.Contains(i)).ToArray();
         }
-
 
         private void AddSlackAndSurplusVariables()
         {
-            for (int i = 0, index = 0; i < nonStandardLp.Costraints.Length; i++)
+            int numConstraints = nonStandardLp.Costraints.Length;
+            int numAddedVariables = 0; // Contatore delle variabili di slack/surplus aggiunte
+
+            for (int i = 0; i < numConstraints; i++)
             {
                 if (nonStandardLp.Costraints[i].InequalityType == InequalitySign.LessThanOrEqual)
                 {
-                    for (int j = 0; j < index; j++)
+                    for (int j = 0; j < numAddedVariables; j++)
                     {
                         standardLp.Costraints[i].Coefficients.Add(0);
                     }
 
                     standardLp.Costraints[i].Coefficients.Add(1);
-                    index++;
+                    numAddedVariables++;
                     standardLp.Costraints[i].InequalityType = InequalitySign.Equal;
                     standardLp.TotalVariables++;
                 }
                 else if (nonStandardLp.Costraints[i].InequalityType == InequalitySign.GreaterThanOrEqual)
                 {
-
-                    for (int j = 0; j < index; j++)
+                    for (int j = 0; j < numAddedVariables; j++)
                     {
                         standardLp.Costraints[i].Coefficients.Add(0);
                     }
-                    
+
                     standardLp.Costraints[i].Coefficients.Add(-1);
-                    index++;
+                    numAddedVariables++;
                     standardLp.Costraints[i].InequalityType = InequalitySign.Equal;
                     standardLp.TotalVariables++;
+                }
+            }
+
+            // Aggiungi zeri rimanenti solo dopo l'aggiunta delle variabili di slack/surplus
+
+            for (int i = 0, numZerosToAdd = standardLp.TotalVariables - nonStandardLp.TotalVariables; i < numConstraints; i++)
+            {
+                for (int j = 0; j < numZerosToAdd; j++, numZerosToAdd--)
+                {
+                    standardLp.Costraints[i].Coefficients.Add(0);
                 }
             }
         }
@@ -154,12 +173,17 @@ namespace LinearProgrammingSolver
             sb.Append("\n\nCost coefficients (c^T):\n\n");
             sb.Append("[").Append(cTransposed.Any() ? string.Join(", ", cTransposed) : "").Append("]");
 
-
             sb.Append("\n\nBase variables index:\n\n");
             sb.Append("[").Append(baseVariables.Any() ? string.Join(", ", baseVariables) : "").Append("]");
 
             sb.Append("\n\nNon base variables index:\n\n");
             sb.Append("[").Append(nonBaseVariables.Any() ? string.Join(", ", nonBaseVariables) : "").Append("]");
+
+            sb.Append("\n\nCost coefficients of base variables (c_b^T):\n\n");
+            sb.Append("[").Append(c_b_Transposed.Any() ? string.Join(", ", c_b_Transposed) : "").Append("]");
+
+            sb.Append("\n\nCoefficients matrix of base variables (A_b):\n\n");
+            sb.Append(A_b);
 
             return sb.ToString();
         }
