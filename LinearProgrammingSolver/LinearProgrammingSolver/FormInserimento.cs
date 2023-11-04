@@ -27,6 +27,15 @@ namespace LinearProgrammingSolver
                 new Inequality(new List<decimal> { -1, 1, 1 }, InequalitySign.LessThanOrEqual, 3)
             };
 
+            /*List<decimal> objectiveCoefficients = new List<decimal> { 3, 9, -3 };
+            Inequality[] constraints = new Inequality[]
+            {
+                new Inequality(new List<decimal> { 1, -1/3, 2/3 }, InequalitySign.LessThanOrEqual, 1),
+                new Inequality(new List<decimal> { -4, 4, 4 }, InequalitySign.LessThanOrEqual, 8),
+                new Inequality(new List<decimal> { -3, 0, 2 }, InequalitySign.LessThanOrEqual, 4)
+            };*/
+
+
             LinearProgrammingProblem lp = new LinearProgrammingProblem(
                 new Equation(objectiveCoefficients),
                 false,

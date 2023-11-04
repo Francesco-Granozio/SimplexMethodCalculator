@@ -12,8 +12,8 @@ namespace LinearProgrammingSolver
         private bool hasObjectiveFunctionSignChanged = false;
         private CoefficientsMatrix coefficientsMatrix;
         private decimal[] cTransposed;
-        private int[] baseVariables;
-        private int[] nonBaseVariables;
+        private List<int> baseVariables = new List<int>();
+        private List<int> nonBaseVariables = new List<int>();
         private bool isSolved = false;
 
         public SimplexSolver(LinearProgrammingProblem lp)
@@ -62,60 +62,46 @@ namespace LinearProgrammingSolver
             // cerco una base ammissibile
             //TODO: implementare il metodo delle 2 fasi
             
-            (baseVariables, nonBaseVariables) = FindBase();
+            FindBase();
 
            
             isSolved = true;
         }
 
-        private (int[], int[]) FindBase()
+        private void FindBase()
         {
-            int numRows = coefficientsMatrix.TotalRows;
             int numCols = coefficientsMatrix.TotalColumns;
-            int numIdentityColumns = Math.Min(numRows, numCols);
-
-            List<int> baseColumns = new List<int>();
-            List<int> nonBaseColumns = new List<int>();
-
-            for (int col = 0; col < numIdentityColumns; col++)
+            int identityMatrixSize = standardLp.Costraints.Length;
+            
+            for (int i = 0; i < numCols; i++)
             {
-                // Verifica se la colonna è una colonna della matrice identità
-                bool isBaseColumn = true;
+                decimal[] currentColumn = coefficientsMatrix.GetColumn(i);
 
-                for (int row = 0; row < numRows; row++)
+                for (int rowIndex = 0; rowIndex < identityMatrixSize; rowIndex++)
                 {
-                    decimal element = coefficientsMatrix[row, col];
-
-                    if (row == col)
+                    if (currentColumn[rowIndex] == 1)
                     {
-                        if (element != 1)
+                        for (int j = 0; j < currentColumn.Length; j++)
                         {
-                            isBaseColumn = false;
-                            break;
+                            if (j != rowIndex && currentColumn[j] != 0)
+                            {
+                                break;
+                            }
+                            else if (j == currentColumn.Length - 1)
+                            {
+                                baseVariables.Add(i);
+                            }
                         }
                     }
-                    else
-                    {
-                        if (element != 0)
-                        {
-                            isBaseColumn = false;
-                            break;
-                        }
-                    }
-                }
-
-                if (isBaseColumn)
-                {
-                    baseColumns.Add(col);
-                }
-                else
-                {
-                    nonBaseColumns.Add(col);
                 }
             }
-
-            Console.WriteLine("Base columns: " + string.Join(", ", baseColumns));
-            return (baseColumns.ToArray(), nonBaseColumns.ToArray());
+            for (int i = 0; i < numCols; i++)
+            {
+                if (!baseVariables.Contains(i))
+                {
+                    nonBaseVariables.Add(i);
+                }
+            }
         }
 
 
@@ -171,6 +157,9 @@ namespace LinearProgrammingSolver
 
             sb.Append("\n\nBase variables index:\n\n");
             sb.Append("[").Append(baseVariables.Any() ? string.Join(", ", baseVariables) : "").Append("]");
+
+            sb.Append("\n\nNon base variables index:\n\n");
+            sb.Append("[").Append(nonBaseVariables.Any() ? string.Join(", ", nonBaseVariables) : "").Append("]");
 
             return sb.ToString();
         }
