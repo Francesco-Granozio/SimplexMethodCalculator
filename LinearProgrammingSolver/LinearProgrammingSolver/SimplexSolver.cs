@@ -42,11 +42,25 @@ namespace LinearProgrammingSolver
             A_b_Inverse = A_b.Clone().Invert();
 
 
-            Simplex simplex = new Simplex(coefficientsMatrix, cTransposed, baseVariables, nonBaseVariables, c_b_Transposed, A_b, A_b_Inverse);
+            Simplex simplex = new Simplex(coefficientsMatrix, cTransposed, baseVariables, nonBaseVariables, c_b_Transposed, A_b, A_b_Inverse, standardLp.KnownTerms);
 
             (bool isOptimal, int index, decimal value) = simplex.OptTest();
 
             Console.WriteLine(isOptimal ? $"The base is optimal" : $"x{index + 1} goes out of the base with value: {value}");
+
+            if (!isOptimal)
+            {
+                (bool isUnlimited, decimal[] yj) = simplex.UnlimitednessTest(index);
+
+                Console.WriteLine(isUnlimited ? $"The problem is unlimited" : $"yj = {yj}");
+
+                if (!isUnlimited)
+                {
+                    (int exitIndex, decimal enteringValue) = simplex.MinRatioTest(index, yj);
+                    Console.WriteLine($"x{exitIndex + 1} goes out of the base x{index + 1} goes in the base with value: {enteringValue}");
+                }
+            }
+                
 
             isSolved = true;
         }

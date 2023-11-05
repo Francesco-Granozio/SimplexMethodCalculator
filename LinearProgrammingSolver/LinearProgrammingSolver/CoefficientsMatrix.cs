@@ -133,6 +133,31 @@ namespace LinearProgrammingSolver
     internal static class CoefficientsMatrixExtension
     {
 
+        public static decimal[] Multiply(this CoefficientsMatrix matrix, decimal[] vector)
+        {
+            int numRows = matrix.TotalRows;
+            int numCols = matrix.TotalColumns;
+
+            if (numCols != vector.Length)
+            {
+                throw new ArgumentException("The number of columns in the matrix must match the length of the vector for multiplication.");
+            }
+
+            decimal[] result = new decimal[numRows];
+
+            for (int i = 0; i < numRows; i++)
+            {
+                decimal sum = 0;
+                for (int j = 0; j < numCols; j++)
+                {
+                    sum += matrix[i, j] * vector[j];
+                }
+                result[i] = sum;
+            }
+
+            return result;
+        }
+
         public static decimal Multiply(this decimal[] vector1, decimal[] vector2)
         {
             if (vector1.Length != vector2.Length)

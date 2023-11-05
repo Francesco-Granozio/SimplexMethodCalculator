@@ -15,9 +15,10 @@ namespace LinearProgrammingSolver
         private decimal[] c_b_Transposed;
         private CoefficientsMatrix A_b;
         private CoefficientsMatrix A_b_Inverse;
+        private decimal[] knownTerms;
 
         public Simplex(CoefficientsMatrix coefficientsMatrix, decimal[] cTransposed, List<int> baseVariables, List<int> nonBaseVariables,
-            decimal[] c_b_Transposed, CoefficientsMatrix A_b, CoefficientsMatrix A_b_Inverse)
+            decimal[] c_b_Transposed, CoefficientsMatrix A_b, CoefficientsMatrix A_b_Inverse, decimal[] knownTerms)
         {
             this.coefficientsMatrix = coefficientsMatrix;
             this.cTransposed = cTransposed;
@@ -26,6 +27,7 @@ namespace LinearProgrammingSolver
             this.c_b_Transposed = c_b_Transposed.Clone() as decimal[];
             this.A_b = A_b.Clone();
             this.A_b_Inverse = A_b_Inverse.Clone();
+            this.knownTerms = knownTerms;
         }
 
         private StringBuilder OptTestToString(int j)
@@ -80,15 +82,39 @@ namespace LinearProgrammingSolver
             }
             Console.WriteLine(sb);
 
-            // se tutti sono >= 0 la base è ottima
-
-            z_j_c_j.Clear();
-            z_j_c_j.Add(0);
-
+            // se tutti sono <= 0 la base è ottima
+            
             return z_j_c_j.Any(x => x > 0) ? (false, z_j_c_j.IndexOf(z_j_c_j.Max()), z_j_c_j.Max()) : (true, -1, -1);
 
         }
     
-        
+        public (bool isUnlimited, decimal[] yj) UnlimitednessTest(int j)
+        {
+            decimal[] yj = A_b_Inverse.Multiply(coefficientsMatrix.GetColumn(nonBaseVariables[j]));
+
+            return yj.All(x => x <= 0) ? (true, yj) : (false, yj);
+        }
+
+        public (int index, decimal value) MinRatioTest(int index, decimal[] yj)
+        {
+            decimal[] bSigned = A_b_Inverse.Multiply(knownTerms);
+            List<decimal> ratios = new List<decimal>();
+
+            for (int i = 0; i < yj.Length; i++)
+            {
+                if (yj[i] > 0)
+                {
+                    decimal ratio = bSigned[i] / yj[i];
+                    ratios.Add(ratio);
+                }
+                else
+                {
+                    ratios.Add(decimal.MaxValue); // Usiamo un valore massimo per evitare divisioni per zero
+                }
+            }
+
+            decimal minRatio = ratios.Min();
+            return (baseVariables[ratios.IndexOf(minRatio)], minRatio);
+        }
     }
 }

@@ -14,6 +14,20 @@ namespace LinearProgrammingSolver
         public int TotalVariables { get; set; }
         public int TotalCostraints { get; private set; }
         
+        public decimal[] KnownTerms
+        {
+            get
+            {
+                decimal[] knownTerms = new decimal[Costraints.Length];
+
+                for (int i = 0; i < Costraints.Length; i++)
+                {
+                    knownTerms[i] = Costraints[i].KnownTerm;
+                }
+
+                return knownTerms;
+            }
+        }
 
         public LinearProgrammingProblem(Equation objectiveFunction, bool isMinFunction, Inequality[] costraints, 
             int totalVariables, int totalCostraints)
