@@ -7,11 +7,13 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Runtime.InteropServices;
 
 namespace LinearProgrammingSolver
 {
     public partial class FormInserimento : Form
     {
+
         public FormInserimento()
         {
             InitializeComponent();
@@ -19,21 +21,22 @@ namespace LinearProgrammingSolver
 
         private void FormInserimento_Load(object sender, EventArgs e)
         {
-            /*List<decimal> objectiveCoefficients = new List<decimal> { 4, 2, 1 };
+
+            List<decimal> objectiveCoefficients = new List<decimal> { 4, 2, 1 };
             Inequality []constraints = new Inequality[]
             {
                 new Inequality(new List<decimal> { -3, 1 }, InequalitySign.LessThanOrEqual, 1),
                 new Inequality(new List<decimal> { 1, -2, 1 }, InequalitySign.LessThanOrEqual, 5),
                 new Inequality(new List<decimal> { -1, 1, 1 }, InequalitySign.LessThanOrEqual, 3)
-            };*/
+            };
 
-            List<decimal> objectiveCoefficients = new List<decimal> { 3, 9, -3 };
+            /*List<decimal> objectiveCoefficients = new List<decimal> { 3, 9, -3 };
             Inequality[] constraints = new Inequality[]
             {
                 new Inequality(new List<decimal> { 1, -1/3m, 2/3m }, InequalitySign.LessThanOrEqual, 1),
                 new Inequality(new List<decimal> { -4, 4, 4 }, InequalitySign.LessThanOrEqual, 8),
                 new Inequality(new List<decimal> { -3, 0, 2 }, InequalitySign.LessThanOrEqual, 4)
-            };
+            };*/
 
 
             LinearProgrammingProblem lp = new LinearProgrammingProblem(
@@ -45,7 +48,8 @@ namespace LinearProgrammingSolver
 
             SimplexSolver solver = new SimplexSolver(lp);
             solver.Solve();
-            Console.WriteLine(solver);
+            //Console.WriteLine(solver);
+
         }
     }
 }

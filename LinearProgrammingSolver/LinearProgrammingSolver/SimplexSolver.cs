@@ -16,6 +16,7 @@ namespace LinearProgrammingSolver
         private List<int> nonBaseVariables = new List<int>();
         private decimal[] c_b_Transposed;
         private CoefficientsMatrix A_b;
+        private CoefficientsMatrix A_b_Inverse;
         private bool isSolved = false;
 
         public SimplexSolver(LinearProgrammingProblem lp)
@@ -28,7 +29,28 @@ namespace LinearProgrammingSolver
         {
             ConvertProblemToStandardForm();
             SetupSimplex();
+
+            // cerco una base ammissibile
+            //TODO: implementare il metodo delle 2 fasi
+
+            FindBase();
+
+            // creo la matrice di base
+
+            A_b = new CoefficientsMatrix(standardLp, baseVariables);
+
+            A_b_Inverse = A_b.Clone().Invert();
+
+
+            Simplex simplex = new Simplex(coefficientsMatrix, cTransposed, baseVariables, nonBaseVariables, c_b_Transposed, A_b, A_b_Inverse);
+
+            (int index, decimal value) = simplex.OptTest();
+
+            Console.WriteLine($"x{index + 1} goes out of the base with value: {value}");
+
+            isSolved = true;
         }
+
 
         private void SetupSimplex()
         {
@@ -38,17 +60,6 @@ namespace LinearProgrammingSolver
 
             cTransposed = standardLp.ObjectiveFunction.Coefficients.Concat(
                 Enumerable.Repeat(0m, standardLp.TotalVariables - standardLp.ObjectiveFunction.TotalVariables)).ToArray();
-
-            // cerco una base ammissibile
-            //TODO: implementare il metodo delle 2 fasi
-
-            FindBase();
-
-            // creo la matice di base
-
-            A_b = new CoefficientsMatrix(standardLp, baseVariables);
-
-            isSolved = true;
         }
 
         private void ConvertProblemToStandardForm()
