@@ -44,9 +44,9 @@ namespace LinearProgrammingSolver
 
             Simplex simplex = new Simplex(coefficientsMatrix, cTransposed, baseVariables, nonBaseVariables, c_b_Transposed, A_b, A_b_Inverse);
 
-            (int index, decimal value) = simplex.OptTest();
+            (bool isOptimal, int index, decimal value) = simplex.OptTest();
 
-            Console.WriteLine($"x{index + 1} goes out of the base with value: {value}");
+            Console.WriteLine(isOptimal ? $"The base is optimal" : $"x{index + 1} goes out of the base with value: {value}");
 
             isSolved = true;
         }

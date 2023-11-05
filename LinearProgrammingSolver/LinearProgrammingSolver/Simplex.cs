@@ -64,7 +64,7 @@ namespace LinearProgrammingSolver
         }
 
         
-        public (int index, decimal value) OptTest()
+        public (bool isOptimal, int index, decimal value) OptTest()
         {
             List<decimal> z_j_c_j = new List<decimal>();
             decimal result;
@@ -79,8 +79,16 @@ namespace LinearProgrammingSolver
                 sb.Append(" = ").Append(result).Append("\n\n");
             }
             Console.WriteLine(sb);
-            
-            return (z_j_c_j.IndexOf(z_j_c_j.Max()), z_j_c_j.Max());
+
+            // se tutti sono >= 0 la base è ottima
+
+            z_j_c_j.Clear();
+            z_j_c_j.Add(0);
+
+            return z_j_c_j.Any(x => x > 0) ? (false, z_j_c_j.IndexOf(z_j_c_j.Max()), z_j_c_j.Max()) : (true, -1, -1);
+
         }
+    
+        
     }
 }
