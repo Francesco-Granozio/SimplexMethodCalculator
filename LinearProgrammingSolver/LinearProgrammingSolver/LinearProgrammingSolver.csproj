@@ -5,7 +5,7 @@
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectGuid>{745F10CB-1D1C-43FB-B765-90E82BE76A26}</ProjectGuid>
-    <OutputType>Exe</OutputType>
+    <OutputType>WinExe</OutputType>
     <RootNamespace>LinearProgrammingSolver</RootNamespace>
     <AssemblyName>LinearProgrammingSolver</AssemblyName>
     <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>

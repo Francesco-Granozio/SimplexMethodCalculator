@@ -49,10 +49,10 @@ namespace LinearProgrammingSolver
             switch (InequalityType)
             {
                 case InequalitySign.LessThanOrEqual:
-                    sb.Append(" <= ");
+                    sb.Append(" ≤ ");
                     break;
                 case InequalitySign.GreaterThanOrEqual:
-                    sb.Append(" >= ");
+                    sb.Append(" ≥ ");
                     break;
                 case InequalitySign.Equal:
                     sb.Append(" = ");

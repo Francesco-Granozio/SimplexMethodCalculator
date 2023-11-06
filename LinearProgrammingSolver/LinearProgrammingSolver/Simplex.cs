@@ -8,14 +8,13 @@ namespace LinearProgrammingSolver
 {
     internal class Simplex
     {
-        private CoefficientsMatrix coefficientsMatrix;
-        private decimal[] cTransposed;
-        private List<int> baseVariables = new List<int>();
-        private List<int> nonBaseVariables = new List<int>();
-        private decimal[] c_b_Transposed;
-        private CoefficientsMatrix A_b;
-        private CoefficientsMatrix A_b_Inverse;
-        private decimal[] knownTerms;
+        private readonly CoefficientsMatrix coefficientsMatrix;
+        private readonly decimal[] cTransposed;
+        private readonly List<int> baseVariables = new List<int>();
+        private readonly List<int> nonBaseVariables = new List<int>();
+        private readonly decimal[] c_b_Transposed;
+        private readonly CoefficientsMatrix A_b_Inverse;
+        private readonly decimal[] knownTerms;
 
         public Simplex(CoefficientsMatrix coefficientsMatrix, decimal[] cTransposed, List<int> baseVariables, List<int> nonBaseVariables,
             decimal[] c_b_Transposed, CoefficientsMatrix A_b, CoefficientsMatrix A_b_Inverse, decimal[] knownTerms)
@@ -25,7 +24,6 @@ namespace LinearProgrammingSolver
             this.baseVariables = new List<int>(baseVariables);
             this.nonBaseVariables = new List<int>(nonBaseVariables);
             this.c_b_Transposed = c_b_Transposed.Clone() as decimal[];
-            this.A_b = A_b.Clone();
             this.A_b_Inverse = A_b_Inverse.Clone();
             this.knownTerms = knownTerms;
         }

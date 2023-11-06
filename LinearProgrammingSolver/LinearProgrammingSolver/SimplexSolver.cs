@@ -8,12 +8,13 @@ namespace LinearProgrammingSolver
 {
     internal class SimplexSolver
     {
-        private LinearProgrammingProblem nonStandardLp, standardLp;
+        private readonly LinearProgrammingProblem nonStandardLp;
+        private readonly LinearProgrammingProblem standardLp;
         private bool hasObjectiveFunctionSignChanged = false;
         private CoefficientsMatrix coefficientsMatrix;
         private decimal[] cTransposed;
-        private List<int> baseVariables = new List<int>();
-        private List<int> nonBaseVariables = new List<int>();
+        private readonly List<int> baseVariables = new List<int>();
+        private readonly List<int> nonBaseVariables = new List<int>();
         private decimal[] c_b_Transposed;
         private CoefficientsMatrix A_b;
         private CoefficientsMatrix A_b_Inverse;
@@ -57,7 +58,7 @@ namespace LinearProgrammingSolver
                 if (!isUnlimited)
                 {
                     (int exitIndex, decimal enteringValue) = simplex.MinRatioTest(index, yj);
-                    Console.WriteLine($"x{exitIndex + 1} goes out of the base x{index + 1} goes in the base with value: {enteringValue}");
+                    Console.WriteLine($"x{exitIndex + 1}, goes out of the base x{index + 1} goes in the base with value: {enteringValue}");
                 }
             }
                 
