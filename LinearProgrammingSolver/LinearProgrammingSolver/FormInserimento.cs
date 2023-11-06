@@ -29,6 +29,7 @@ namespace LinearProgrammingSolver
         {
             return new TextBox
             {
+                Name = $"textBoxVariabile{offset}",
                 BackColor = Color.FromArgb(224, 224, 224),
                 Text = "1",
                 Size = new Size(50, 33),
@@ -54,6 +55,7 @@ namespace LinearProgrammingSolver
 
             return new Label
             {
+                Name = $"labelVariabile{offset}",
                 Text = text,
                 Size = new Size(50, 33),
                 Location = new Point(218 + (offset * 120), 80),
@@ -80,6 +82,8 @@ namespace LinearProgrammingSolver
                 // Add the label and textbox to the panel
                 panel1.Controls.Add(labelVariable);
                 panel1.Controls.Add(textBoxVariable);
+
+                
             }
 
             comboBox_function.SelectedItem = "max";
@@ -137,7 +141,6 @@ namespace LinearProgrammingSolver
 
                     // Crea un nuovo label e imposta il suo testo
                     Label label = CreateCoefficientLabel(i);
-                    Console.WriteLine(label.Text);
                     labelVariabiliFunzioneObiettivo.Add(label);
 
                     panel1.Controls.Add(label);

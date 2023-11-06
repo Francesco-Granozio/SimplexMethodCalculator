@@ -259,58 +259,64 @@
             // 
             this.textBox2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
             this.textBox2.Font = new System.Drawing.Font("Segoe UI", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.textBox2.Location = new System.Drawing.Point(358, 220);
+            this.textBox2.Location = new System.Drawing.Point(366, 267);
             this.textBox2.Name = "textBox2";
             this.textBox2.Size = new System.Drawing.Size(52, 33);
             this.textBox2.TabIndex = 30;
             this.textBox2.Text = "8";
+            this.textBox2.Visible = false;
             // 
             // label10
             // 
             this.label10.Font = new System.Drawing.Font("Segoe UI", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label10.Location = new System.Drawing.Point(411, 222);
+            this.label10.Location = new System.Drawing.Point(419, 269);
             this.label10.Name = "label10";
             this.label10.Size = new System.Drawing.Size(50, 23);
             this.label10.TabIndex = 29;
             this.label10.Text = "x3 ";
+            this.label10.Visible = false;
             // 
             // textBox3
             // 
             this.textBox3.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
             this.textBox3.Font = new System.Drawing.Font("Segoe UI", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.textBox3.Location = new System.Drawing.Point(264, 220);
+            this.textBox3.Location = new System.Drawing.Point(272, 267);
             this.textBox3.Name = "textBox3";
             this.textBox3.Size = new System.Drawing.Size(52, 33);
             this.textBox3.TabIndex = 28;
             this.textBox3.Text = "2";
+            this.textBox3.Visible = false;
             // 
             // label12
             // 
             this.label12.Font = new System.Drawing.Font("Segoe UI", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label12.Location = new System.Drawing.Point(313, 222);
+            this.label12.Location = new System.Drawing.Point(321, 269);
             this.label12.Name = "label12";
             this.label12.Size = new System.Drawing.Size(50, 23);
             this.label12.TabIndex = 27;
             this.label12.Text = "x2 + ";
+            this.label12.Visible = false;
             // 
             // textBox10
             // 
             this.textBox10.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
             this.textBox10.Font = new System.Drawing.Font("Segoe UI", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.textBox10.Location = new System.Drawing.Point(168, 220);
+            this.textBox10.Location = new System.Drawing.Point(176, 267);
             this.textBox10.Name = "textBox10";
             this.textBox10.Size = new System.Drawing.Size(52, 33);
             this.textBox10.TabIndex = 26;
             this.textBox10.Text = "5";
+            this.textBox10.Visible = false;
             // 
             // label13
             // 
             this.label13.Font = new System.Drawing.Font("Segoe UI", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label13.Location = new System.Drawing.Point(218, 222);
+            this.label13.Location = new System.Drawing.Point(226, 269);
             this.label13.Name = "label13";
             this.label13.Size = new System.Drawing.Size(50, 23);
             this.label13.TabIndex = 25;
             this.label13.Text = "x1 + ";
+            this.label13.Visible = false;
             // 
             // FormInserimento
             // 
