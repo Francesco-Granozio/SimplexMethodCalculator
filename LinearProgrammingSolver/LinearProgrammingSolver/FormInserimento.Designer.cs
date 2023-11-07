@@ -29,6 +29,12 @@
         private void InitializeComponent()
         {
             this.panel1 = new System.Windows.Forms.Panel();
+            this.textBox2 = new System.Windows.Forms.TextBox();
+            this.label10 = new System.Windows.Forms.Label();
+            this.textBox3 = new System.Windows.Forms.TextBox();
+            this.label12 = new System.Windows.Forms.Label();
+            this.textBox10 = new System.Windows.Forms.TextBox();
+            this.label13 = new System.Windows.Forms.Label();
             this.label11 = new System.Windows.Forms.Label();
             this.numericUpDown_totalConstraints = new System.Windows.Forms.NumericUpDown();
             this.numericUpDown_totalVariables = new System.Windows.Forms.NumericUpDown();
@@ -44,12 +50,6 @@
             this.label3 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.comboBox_function = new System.Windows.Forms.ComboBox();
-            this.textBox2 = new System.Windows.Forms.TextBox();
-            this.label10 = new System.Windows.Forms.Label();
-            this.textBox3 = new System.Windows.Forms.TextBox();
-            this.label12 = new System.Windows.Forms.Label();
-            this.textBox10 = new System.Windows.Forms.TextBox();
-            this.label13 = new System.Windows.Forms.Label();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown_totalConstraints)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown_totalVariables)).BeginInit();
@@ -84,6 +84,69 @@
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(636, 366);
             this.panel1.TabIndex = 0;
+            // 
+            // textBox2
+            // 
+            this.textBox2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
+            this.textBox2.Font = new System.Drawing.Font("Segoe UI", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.textBox2.Location = new System.Drawing.Point(366, 326);
+            this.textBox2.Name = "textBox2";
+            this.textBox2.Size = new System.Drawing.Size(52, 33);
+            this.textBox2.TabIndex = 30;
+            this.textBox2.Text = "8";
+            this.textBox2.Visible = false;
+            // 
+            // label10
+            // 
+            this.label10.Font = new System.Drawing.Font("Segoe UI", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label10.Location = new System.Drawing.Point(419, 328);
+            this.label10.Name = "label10";
+            this.label10.Size = new System.Drawing.Size(50, 23);
+            this.label10.TabIndex = 29;
+            this.label10.Text = "x3 ";
+            this.label10.Visible = false;
+            // 
+            // textBox3
+            // 
+            this.textBox3.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
+            this.textBox3.Font = new System.Drawing.Font("Segoe UI", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.textBox3.Location = new System.Drawing.Point(272, 326);
+            this.textBox3.Name = "textBox3";
+            this.textBox3.Size = new System.Drawing.Size(52, 33);
+            this.textBox3.TabIndex = 28;
+            this.textBox3.Text = "2";
+            this.textBox3.Visible = false;
+            // 
+            // label12
+            // 
+            this.label12.Font = new System.Drawing.Font("Segoe UI", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label12.Location = new System.Drawing.Point(321, 328);
+            this.label12.Name = "label12";
+            this.label12.Size = new System.Drawing.Size(50, 23);
+            this.label12.TabIndex = 27;
+            this.label12.Text = "x2 + ";
+            this.label12.Visible = false;
+            // 
+            // textBox10
+            // 
+            this.textBox10.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
+            this.textBox10.Font = new System.Drawing.Font("Segoe UI", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.textBox10.Location = new System.Drawing.Point(176, 326);
+            this.textBox10.Name = "textBox10";
+            this.textBox10.Size = new System.Drawing.Size(52, 33);
+            this.textBox10.TabIndex = 26;
+            this.textBox10.Text = "5";
+            this.textBox10.Visible = false;
+            // 
+            // label13
+            // 
+            this.label13.Font = new System.Drawing.Font("Segoe UI", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label13.Location = new System.Drawing.Point(226, 328);
+            this.label13.Name = "label13";
+            this.label13.Size = new System.Drawing.Size(50, 23);
+            this.label13.TabIndex = 25;
+            this.label13.Text = "x1 + ";
+            this.label13.Visible = false;
             // 
             // label11
             // 
@@ -138,11 +201,12 @@
             // 
             this.textBox9.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
             this.textBox9.Font = new System.Drawing.Font("Segoe UI", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.textBox9.Location = new System.Drawing.Point(376, 160);
+            this.textBox9.Location = new System.Drawing.Point(376, 277);
             this.textBox9.Name = "textBox9";
             this.textBox9.Size = new System.Drawing.Size(52, 33);
             this.textBox9.TabIndex = 20;
             this.textBox9.Text = "60";
+            this.textBox9.Visible = false;
             // 
             // comboBox1
             // 
@@ -153,67 +217,74 @@
             "≤",
             "=",
             "≥"});
-            this.comboBox1.Location = new System.Drawing.Point(321, 160);
+            this.comboBox1.Location = new System.Drawing.Point(321, 277);
             this.comboBox1.Name = "comboBox1";
             this.comboBox1.Size = new System.Drawing.Size(43, 33);
             this.comboBox1.TabIndex = 19;
+            this.comboBox1.Visible = false;
             // 
             // textBox6
             // 
             this.textBox6.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
             this.textBox6.Font = new System.Drawing.Font("Segoe UI", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.textBox6.Location = new System.Drawing.Point(234, 161);
+            this.textBox6.Location = new System.Drawing.Point(234, 278);
             this.textBox6.Name = "textBox6";
             this.textBox6.Size = new System.Drawing.Size(52, 33);
             this.textBox6.TabIndex = 18;
             this.textBox6.Text = "8";
+            this.textBox6.Visible = false;
             // 
             // label7
             // 
             this.label7.Font = new System.Drawing.Font("Segoe UI", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label7.Location = new System.Drawing.Point(287, 163);
+            this.label7.Location = new System.Drawing.Point(287, 280);
             this.label7.Name = "label7";
             this.label7.Size = new System.Drawing.Size(50, 23);
             this.label7.TabIndex = 17;
             this.label7.Text = "x3 ";
+            this.label7.Visible = false;
             // 
             // textBox7
             // 
             this.textBox7.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
             this.textBox7.Font = new System.Drawing.Font("Segoe UI", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.textBox7.Location = new System.Drawing.Point(140, 161);
+            this.textBox7.Location = new System.Drawing.Point(140, 278);
             this.textBox7.Name = "textBox7";
             this.textBox7.Size = new System.Drawing.Size(52, 33);
             this.textBox7.TabIndex = 16;
             this.textBox7.Text = "2";
+            this.textBox7.Visible = false;
             // 
             // label8
             // 
             this.label8.Font = new System.Drawing.Font("Segoe UI", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label8.Location = new System.Drawing.Point(189, 163);
+            this.label8.Location = new System.Drawing.Point(189, 280);
             this.label8.Name = "label8";
             this.label8.Size = new System.Drawing.Size(50, 23);
             this.label8.TabIndex = 15;
             this.label8.Text = "x2 + ";
+            this.label8.Visible = false;
             // 
             // textBox8
             // 
             this.textBox8.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
             this.textBox8.Font = new System.Drawing.Font("Segoe UI", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.textBox8.Location = new System.Drawing.Point(44, 161);
+            this.textBox8.Location = new System.Drawing.Point(44, 278);
             this.textBox8.Name = "textBox8";
             this.textBox8.Size = new System.Drawing.Size(52, 33);
             this.textBox8.TabIndex = 14;
             this.textBox8.Text = "5";
+            this.textBox8.Visible = false;
             // 
             // label9
             // 
             this.label9.Font = new System.Drawing.Font("Segoe UI", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label9.Location = new System.Drawing.Point(94, 163);
+            this.label9.Location = new System.Drawing.Point(94, 280);
             this.label9.Name = "label9";
             this.label9.Size = new System.Drawing.Size(50, 23);
             this.label9.TabIndex = 13;
             this.label9.Text = "x1 + ";
+            this.label9.Visible = false;
             // 
             // label6
             // 
@@ -254,69 +325,6 @@
             this.comboBox_function.Name = "comboBox_function";
             this.comboBox_function.Size = new System.Drawing.Size(72, 29);
             this.comboBox_function.TabIndex = 0;
-            // 
-            // textBox2
-            // 
-            this.textBox2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
-            this.textBox2.Font = new System.Drawing.Font("Segoe UI", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.textBox2.Location = new System.Drawing.Point(366, 267);
-            this.textBox2.Name = "textBox2";
-            this.textBox2.Size = new System.Drawing.Size(52, 33);
-            this.textBox2.TabIndex = 30;
-            this.textBox2.Text = "8";
-            this.textBox2.Visible = false;
-            // 
-            // label10
-            // 
-            this.label10.Font = new System.Drawing.Font("Segoe UI", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label10.Location = new System.Drawing.Point(419, 269);
-            this.label10.Name = "label10";
-            this.label10.Size = new System.Drawing.Size(50, 23);
-            this.label10.TabIndex = 29;
-            this.label10.Text = "x3 ";
-            this.label10.Visible = false;
-            // 
-            // textBox3
-            // 
-            this.textBox3.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
-            this.textBox3.Font = new System.Drawing.Font("Segoe UI", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.textBox3.Location = new System.Drawing.Point(272, 267);
-            this.textBox3.Name = "textBox3";
-            this.textBox3.Size = new System.Drawing.Size(52, 33);
-            this.textBox3.TabIndex = 28;
-            this.textBox3.Text = "2";
-            this.textBox3.Visible = false;
-            // 
-            // label12
-            // 
-            this.label12.Font = new System.Drawing.Font("Segoe UI", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label12.Location = new System.Drawing.Point(321, 269);
-            this.label12.Name = "label12";
-            this.label12.Size = new System.Drawing.Size(50, 23);
-            this.label12.TabIndex = 27;
-            this.label12.Text = "x2 + ";
-            this.label12.Visible = false;
-            // 
-            // textBox10
-            // 
-            this.textBox10.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
-            this.textBox10.Font = new System.Drawing.Font("Segoe UI", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.textBox10.Location = new System.Drawing.Point(176, 267);
-            this.textBox10.Name = "textBox10";
-            this.textBox10.Size = new System.Drawing.Size(52, 33);
-            this.textBox10.TabIndex = 26;
-            this.textBox10.Text = "5";
-            this.textBox10.Visible = false;
-            // 
-            // label13
-            // 
-            this.label13.Font = new System.Drawing.Font("Segoe UI", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label13.Location = new System.Drawing.Point(226, 269);
-            this.label13.Name = "label13";
-            this.label13.Size = new System.Drawing.Size(50, 23);
-            this.label13.TabIndex = 25;
-            this.label13.Text = "x1 + ";
-            this.label13.Visible = false;
             // 
             // FormInserimento
             // 

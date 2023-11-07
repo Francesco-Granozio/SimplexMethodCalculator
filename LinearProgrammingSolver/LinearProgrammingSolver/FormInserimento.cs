@@ -18,6 +18,12 @@ namespace LinearProgrammingSolver
         private int numVincoli;
         private List<TextBox> textBoxVariabiliFunzioneObiettivo = new List<TextBox>();
         private List<Label> labelVariabiliFunzioneObiettivo = new List<Label>();
+        
+        private List<TextBox> textBoxVincoli = new List<TextBox>();
+        private List<Label> labelVincoli = new List<Label>();
+        
+        private List<ComboBox> comboBoxSegniVincoli = new List<ComboBox>();
+        private List<TextBox> textBoxKnownTerms = new List<TextBox>();
 
         public FormInserimento()
         {
@@ -25,44 +31,62 @@ namespace LinearProgrammingSolver
         }
 
 
-        private TextBox CreateCoefficientTextBox(int offset)
+        private TextBox CreateCoefficientTextBox(int x, int y, int xOffset, int yOffset)
         {
             return new TextBox
             {
-                Name = $"textBoxVariabile{offset}",
+                Name = $"textBoxVariabile{xOffset}",
                 BackColor = Color.FromArgb(224, 224, 224),
                 Text = "1",
                 Size = new Size(50, 33),
-                Location = new Point(168 + (offset * 120), 78),
+                Location = new Point(x + (xOffset * 120), y + (yOffset * 40)),
                 Font = new Font("Segoe UI", 14),
                 Visible = true
             };
         }
 
-        private Label CreateCoefficientLabel(int offset)
+        private Label CreateCoefficientLabel(int x, int y, int xOffset, int yOffset)
         {
             string text;
 
-            if (offset == numVariabili - 1)
+            if (xOffset == numVariabili - 1)
             {
-                text = "x" + (offset + 1);
+                text = "x" + (xOffset + 1);
             }
             else
             {
-                text = "x" + (offset + 1) + " +";
+                text = "x" + (xOffset + 1) + " +";
             }
 
 
             return new Label
             {
-                Name = $"labelVariabile{offset}",
+                Name = $"labelVariabile{xOffset}",
                 Text = text,
                 Size = new Size(50, 33),
-                Location = new Point(218 + (offset * 120), 80),
+                Location = new Point(x + (xOffset * 120), y + (yOffset * 40)),
                 Font = new Font("Segoe UI", 14),
                 Visible = true,
                 AutoSize = true
             };
+        }
+
+        private ComboBox CreateInequalitySignComboBox(int x, int y, int xOffset, int yOffset)
+        {
+            {
+                return new ComboBox
+                {
+                    Items = { "≤", "=", "≥" },
+                    SelectedItem = "≤",
+                    Name = $"comboBoxSegnoVincolo{numVincoli}",
+                    Size = new Size(43, 33),
+                    Location = new Point(x + (xOffset * 120), y + (yOffset * 40)),
+                    Font = new Font("Segoe UI", 14),
+                    Visible = true,
+                    DropDownStyle = ComboBoxStyle.DropDownList,
+                    BackColor = Color.FromArgb(253, 253, 253)
+                };
+            }
         }
 
         private void FormInserimento_Load(object sender, EventArgs e)
@@ -73,17 +97,44 @@ namespace LinearProgrammingSolver
             for (int i = 0; i < numVariabili; i++)
             {
                 // Create a new textbox and add it to the list
-                TextBox textBoxVariable = CreateCoefficientTextBox(i);
-                Label labelVariable = CreateCoefficientLabel(i);
+                TextBox textBoxVariable = CreateCoefficientTextBox(168, 78, i, 0);
+                Label labelVariable = CreateCoefficientLabel(218, 80, i, 0);
+
 
                 textBoxVariabiliFunzioneObiettivo.Add(textBoxVariable);
                 labelVariabiliFunzioneObiettivo.Add(labelVariable);
+
 
                 // Add the label and textbox to the panel
                 panel1.Controls.Add(labelVariable);
                 panel1.Controls.Add(textBoxVariable);
 
+            }
+            
+            for (int i = 0; i < numVincoli; i++)
+            {
+                ComboBox comboBoxSegnoVincolo = CreateInequalitySignComboBox(370, 148, 0, i);
+                TextBox textBoxKnownTerm = CreateCoefficientTextBox(430, 148, 0, i);
                 
+                for (int j = 0; j < numVariabili; j++)
+                {
+                    TextBox textBoxVariable = CreateCoefficientTextBox(45, 150, i, j);
+                    Label labelVariable = CreateCoefficientLabel(95, 152, i, j);
+
+                    textBoxVincoli.Add(textBoxVariable);
+                    labelVincoli.Add(labelVariable);
+                    
+                    // Add the label and textbox to the panel
+                    panel1.Controls.Add(labelVariable);
+                    panel1.Controls.Add(textBoxVariable);
+                    
+                }
+
+                comboBoxSegniVincoli.Add(comboBoxSegnoVincolo);
+                textBoxKnownTerms.Add(textBoxKnownTerm);
+                
+                panel1.Controls.Add(comboBoxSegnoVincolo);
+                panel1.Controls.Add(textBoxKnownTerm);
             }
 
             comboBox_function.SelectedItem = "max";
@@ -126,24 +177,62 @@ namespace LinearProgrammingSolver
             numVariabili = (int)numericUpDown_totalVariables.Value;
             int differenza = Math.Abs(numVariabili - oldValue);
 
-            labelVariabiliFunzioneObiettivo[oldValue - 1].Text = "x" + oldValue + " +";
+            labelVariabiliFunzioneObiettivo[oldValue - 1].Text += " +";
 
             if (oldValue < numVariabili)
             {
-                // Aggiungi i nuovi textbox
+                // Aggiungi i nuovi textbox e label per la funzione obiettivo
                 for (int i = oldValue; i < numVariabili; i++)
                 {
                     // Crea un nuovo textbox e aggiungilo alla lista
-                    TextBox textBox = CreateCoefficientTextBox(i);
+                    TextBox textBox = CreateCoefficientTextBox(168, 78, i, 0);
                     textBoxVariabiliFunzioneObiettivo.Add(textBox);
 
                     panel1.Controls.Add(textBox);
 
                     // Crea un nuovo label e imposta il suo testo
-                    Label label = CreateCoefficientLabel(i);
+                    Label label = CreateCoefficientLabel(218, 80, i, 0);
                     labelVariabiliFunzioneObiettivo.Add(label);
 
                     panel1.Controls.Add(label);
+                }
+
+                int lastLabelIndex = numVincoli * oldValue - 1;  // Indice dell'ultimo label prima dell'aggiunta
+
+                for (int k = lastLabelIndex - numVincoli + 1; k <= lastLabelIndex; k++)
+                {
+                    labelVincoli[k].Text += " +";
+                }
+
+                for (int i = 0; i < numVincoli; i++)
+                {
+
+                    foreach (ComboBox comboBox in comboBoxSegniVincoli)
+                    {
+                        comboBox.Location = new Point(comboBox.Location.X + (differenza * 40), comboBox.Location.Y);
+                    }
+
+                    foreach (TextBox textBox in textBoxKnownTerms)
+                    {
+                        textBox.Location = new Point(textBox.Location.X + (differenza * 40), textBox.Location.Y);
+                    }
+
+                    for (int j = oldValue; j < numVariabili; j++)
+                    {
+
+                        TextBox textBoxVariable = CreateCoefficientTextBox(45, 150, j, i);
+                        Label labelVariable = CreateCoefficientLabel(95, 152, j, i);
+
+                        textBoxVincoli.Add(textBoxVariable);
+                        labelVincoli.Add(labelVariable);
+
+                        // Add the label and textbox to the panel
+                        panel1.Controls.Add(labelVariable);
+                        panel1.Controls.Add(textBoxVariable);
+
+                    }
+
+                    
                 }
 
             }
