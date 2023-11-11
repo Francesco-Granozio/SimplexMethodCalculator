@@ -13,8 +13,7 @@ namespace LinearProgrammingSolver
 {
     public partial class FormInserimento : Form
     {
-
-        private EquationControls equationControls = new EquationControls();
+        private LinearProgrammingProblemControls linearProgrammingProblemControls = new LinearProgrammingProblemControls();
 
         private int numVariabili;
         private int numVincoli;
@@ -35,11 +34,12 @@ namespace LinearProgrammingSolver
 
         private TextBox CreateCoefficientTextBox(int x, int y, int xOffset, int yOffset)
         {
+            Random random = new Random();
             return new TextBox
             {
                 Name = $"textBoxVariabile{xOffset}",
                 BackColor = Color.FromArgb(224, 224, 224),
-                Text = "1",
+                Text = random.Next(1, 10).ToString(),
                 Size = new Size(50, 33),
                 Location = new Point(x + (xOffset * 120), y + (yOffset * 40)),
                 Font = new Font("Segoe UI", 14),
@@ -78,12 +78,12 @@ namespace LinearProgrammingSolver
             {
                 return new ComboBox
                 {
-                    Items = { "≤", "=", "≥" },
-                    SelectedItem = "≤",
+                    Items = { "<=", "=", ">=" },
+                    SelectedItem = "<=",
                     Name = $"comboBoxSegnoVincolo{numVincoli}",
                     Size = new Size(43, 33),
                     Location = new Point(x + (xOffset * 120), y + (yOffset * 40)),
-                    Font = new Font("Segoe UI", 14),
+                    Font = new Font("Segoe UI", 12),
                     Visible = true,
                     DropDownStyle = ComboBoxStyle.DropDownList,
                     BackColor = Color.FromArgb(253, 253, 253)
@@ -95,6 +95,7 @@ namespace LinearProgrammingSolver
         {
             numVariabili = (int)numericUpDown_totalVariables.Value;
             numVincoli = (int)numericUpDown_totalConstraints.Value;
+            EquationControls equationControls = new EquationControls();
 
             for (int i = 0; i < numVariabili; i++)
             {
@@ -113,18 +114,25 @@ namespace LinearProgrammingSolver
                 panel1.Controls.Add(textBoxVariable);
 
             }
-
-            Console.WriteLine(equationControls);
+            linearProgrammingProblemControls.ObjectiveFunctionControls = equationControls;
 
             for (int i = 0; i < numVincoli; i++)
             {
                 ComboBox comboBoxSegnoVincolo = CreateInequalitySignComboBox(370, 148, 0, i);
                 TextBox textBoxKnownTerm = CreateCoefficientTextBox(430, 148, 0, i);
 
+
+                InequalityControls inequalityControls = new InequalityControls();
+                inequalityControls.ComboboxSign = comboBoxSegnoVincolo;
+                inequalityControls.TextBoxKnownTerm = textBoxKnownTerm;
+
+
                 for (int j = 0; j < numVariabili; j++)
                 {
                     TextBox textBoxVariable = CreateCoefficientTextBox(45, 150, i, j);
                     Label labelVariable = CreateCoefficientLabel(95, 152, i, j);
+
+                    inequalityControls.AddVariable("x" + (j + 1), textBoxVariable, labelVariable);
 
                     textBoxVincoli.Add(textBoxVariable);
                     labelVincoli.Add(labelVariable);
@@ -140,7 +148,11 @@ namespace LinearProgrammingSolver
 
                 panel1.Controls.Add(comboBoxSegnoVincolo);
                 panel1.Controls.Add(textBoxKnownTerm);
+
+                linearProgrammingProblemControls.AddConstraintControls(inequalityControls);
             }
+
+            Console.WriteLine(linearProgrammingProblemControls);
 
             comboBox_function.SelectedItem = "max";
             comboBox1.SelectedItem = "≤";

@@ -7,24 +7,13 @@ using System.Windows.Forms;
 
 namespace LinearProgrammingSolver
 {
-    internal class EquationControls
+    internal class InequalityControls : EquationControls
     {
-        protected Dictionary<string, (TextBox, Label)> variableControls { get; set; }
-        public int Count { get => variableControls.Count; }
+        public ComboBox ComboboxSign { get; set; }
+        public TextBox TextBoxKnownTerm { get; set; }
 
-        public EquationControls()
+        public InequalityControls() : base()
         {
-            variableControls = new Dictionary<string, (TextBox, Label)>();
-        }
-
-        public void AddVariable(string variableName, TextBox textBox, Label label)
-        {
-            variableControls.Add(variableName, (textBox, label));
-        }
-
-        public void RemoveVariable(string variableName)
-        {
-            variableControls.Remove(variableName);
         }
 
         public override string ToString()
@@ -38,6 +27,11 @@ namespace LinearProgrammingSolver
                 sb.Append(variableControl.Value.Item1.Text);
                 sb.Append(", ");
             }
+
+            sb.Append("Sign: ");
+            sb.Append(ComboboxSign.SelectedItem);
+            sb.Append(", Known Term: ");
+            sb.Append(TextBoxKnownTerm.Text);
 
             return sb.ToString();
         }
