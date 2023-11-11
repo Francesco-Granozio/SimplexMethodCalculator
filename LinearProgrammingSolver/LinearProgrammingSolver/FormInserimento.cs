@@ -14,14 +14,16 @@ namespace LinearProgrammingSolver
     public partial class FormInserimento : Form
     {
 
+        private EquationControls equationControls = new EquationControls();
+
         private int numVariabili;
         private int numVincoli;
         private List<TextBox> textBoxVariabiliFunzioneObiettivo = new List<TextBox>();
         private List<Label> labelVariabiliFunzioneObiettivo = new List<Label>();
-        
+
         private List<TextBox> textBoxVincoli = new List<TextBox>();
         private List<Label> labelVincoli = new List<Label>();
-        
+
         private List<ComboBox> comboBoxSegniVincoli = new List<ComboBox>();
         private List<TextBox> textBoxKnownTerms = new List<TextBox>();
 
@@ -100,6 +102,7 @@ namespace LinearProgrammingSolver
                 TextBox textBoxVariable = CreateCoefficientTextBox(168, 78, i, 0);
                 Label labelVariable = CreateCoefficientLabel(218, 80, i, 0);
 
+                equationControls.AddVariable("x" + (i + 1), textBoxVariable, labelVariable);
 
                 textBoxVariabiliFunzioneObiettivo.Add(textBoxVariable);
                 labelVariabiliFunzioneObiettivo.Add(labelVariable);
@@ -110,12 +113,14 @@ namespace LinearProgrammingSolver
                 panel1.Controls.Add(textBoxVariable);
 
             }
-            
+
+            Console.WriteLine(equationControls);
+
             for (int i = 0; i < numVincoli; i++)
             {
                 ComboBox comboBoxSegnoVincolo = CreateInequalitySignComboBox(370, 148, 0, i);
                 TextBox textBoxKnownTerm = CreateCoefficientTextBox(430, 148, 0, i);
-                
+
                 for (int j = 0; j < numVariabili; j++)
                 {
                     TextBox textBoxVariable = CreateCoefficientTextBox(45, 150, i, j);
@@ -123,16 +128,16 @@ namespace LinearProgrammingSolver
 
                     textBoxVincoli.Add(textBoxVariable);
                     labelVincoli.Add(labelVariable);
-                    
+
                     // Add the label and textbox to the panel
                     panel1.Controls.Add(labelVariable);
                     panel1.Controls.Add(textBoxVariable);
-                    
+
                 }
 
                 comboBoxSegniVincoli.Add(comboBoxSegnoVincolo);
                 textBoxKnownTerms.Add(textBoxKnownTerm);
-                
+
                 panel1.Controls.Add(comboBoxSegnoVincolo);
                 panel1.Controls.Add(textBoxKnownTerm);
             }
@@ -141,7 +146,7 @@ namespace LinearProgrammingSolver
             comboBox1.SelectedItem = "≤";
 
             List<decimal> objectiveCoefficients = new List<decimal> { 4, 2, 1 };
-            Inequality []constraints = new Inequality[]
+            Inequality[] constraints = new Inequality[]
             {
                 new Inequality(new List<decimal> { -3, 1 }, InequalitySign.LessThanOrEqual, 1),
                 new Inequality(new List<decimal> { 1, -2, 1 }, InequalitySign.LessThanOrEqual, 5),
@@ -232,14 +237,14 @@ namespace LinearProgrammingSolver
 
                     }
 
-                    
+
                 }
 
             }
-            
+
             else if (oldValue > numVariabili)
             {
-                
+
                 for (int i = numVariabili; i < oldValue; i++)
                 {
                     TextBox textBoxToRemove = textBoxVariabiliFunzioneObiettivo[numVariabili];
@@ -251,7 +256,7 @@ namespace LinearProgrammingSolver
                     panel1.Controls.Remove(textBoxToRemove);
                     panel1.Controls.Remove(labelToRemove);
                 }
-                
+
                 labelVariabiliFunzioneObiettivo[numVariabili - 1].Text = "x" + numVariabili;
 
                 List<Label> labelsToRemove = labelVincoli.GetRange(labelVincoli.Count - (numVincoli * differenza), numVincoli * differenza);
@@ -275,7 +280,7 @@ namespace LinearProgrammingSolver
                 {
                     panel1.Controls.Remove(textBoxToRemove);
                 }
-                
+
                 labelsToRemove = labelVincoli.GetRange(labelVincoli.Count - numVincoli, numVincoli);
 
                 // Rimuovi il " +" dagli elementi della lista
@@ -295,14 +300,87 @@ namespace LinearProgrammingSolver
                     textBox.Location = new Point(textBox.Location.X - (differenza * 120), textBox.Location.Y);
                 }
 
-                
+
             }
 
         }
 
         private void numericUpDown_totalConstraints_ValueChanged(object sender, EventArgs e)
         {
+            numVariabili = (int)numericUpDown_totalVariables.Value;
+            int oldValue = numVincoli;
+            numVincoli = (int)numericUpDown_totalConstraints.Value;
+            int differenza = Math.Abs(numVincoli - oldValue);
 
+            if (oldValue < numVincoli)
+            {
+                for (int i = 0; i < differenza; i++)
+                {
+                    ComboBox comboBoxSegnoVincolo = CreateInequalitySignComboBox(370, 148, 0, i + oldValue);
+                    TextBox textBoxKnownTerm = CreateCoefficientTextBox(430, 148, 0, i + oldValue);
+
+                    for (int j = 0; j < numVariabili; j++)
+                    {
+                        TextBox textBoxVariable = CreateCoefficientTextBox(45, 150, j, i + oldValue);
+                        Label labelVariable = CreateCoefficientLabel(95, 152, j, i + oldValue);
+
+                        textBoxVincoli.Add(textBoxVariable);
+                        labelVincoli.Add(labelVariable);
+
+                        // Add the label and textbox to the panel
+                        panel1.Controls.Add(labelVariable);
+                        panel1.Controls.Add(textBoxVariable);
+
+                    }
+
+                    comboBoxSegniVincoli.Add(comboBoxSegnoVincolo);
+                    textBoxKnownTerms.Add(textBoxKnownTerm);
+
+                    panel1.Controls.Add(comboBoxSegnoVincolo);
+                    panel1.Controls.Add(textBoxKnownTerm);
+                }
+            }
+            
+            else if (oldValue > numVincoli)
+            {
+
+                for (int j = 0; j < labelVincoli.Count; j++)
+                {
+                    Console.WriteLine(labelVincoli[j]);
+                }
+
+                for (int i = 0; i < differenza; i++)
+                {
+                    for (int j = 0; j < numVariabili; j++)
+                    {
+
+                        Console.WriteLine(textBoxVincoli.Count + j - 1 - numVariabili * j);
+
+
+                        RemoveElement(textBoxVincoli, panel1, textBoxVincoli.Count + j - 1 - numVariabili * j);
+                        RemoveElement(labelVincoli, panel1, labelVincoli.Count + j - 1 - numVariabili * j);
+
+                        
+                    }
+
+                    RemoveElement(comboBoxSegniVincoli, panel1, comboBoxSegniVincoli.Count - 1);
+                    RemoveElement(textBoxKnownTerms, panel1, textBoxKnownTerms.Count - 1);
+
+                }
+            }
+
+
+        }
+
+        private void RemoveElement<T>(List<T> list, Panel panel, int index) where T : Control
+        {
+            if (index >= 0 && index < list.Count)
+            {
+                T removedControl = list[index];
+                list.RemoveAt(index);
+                panel.Controls.Remove(removedControl);
+            }
+                
         }
     }
 }

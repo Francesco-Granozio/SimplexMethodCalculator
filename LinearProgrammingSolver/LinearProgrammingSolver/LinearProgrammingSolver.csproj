@@ -51,6 +51,7 @@
   <ItemGroup>
     <Compile Include="CoefficientsMatrix.cs" />
     <Compile Include="Equation.cs" />
+    <Compile Include="EquationControls.cs" />
     <Compile Include="Inequality.cs" />
     <Compile Include="FormInserimento.cs">
       <SubType>Form</SubType>
