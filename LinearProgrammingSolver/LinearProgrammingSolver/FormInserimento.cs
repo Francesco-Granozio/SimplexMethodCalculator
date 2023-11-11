@@ -236,6 +236,7 @@ namespace LinearProgrammingSolver
                 }
 
             }
+            
             else if (oldValue > numVariabili)
             {
                 
@@ -252,9 +253,51 @@ namespace LinearProgrammingSolver
                 }
                 
                 labelVariabiliFunzioneObiettivo[numVariabili - 1].Text = "x" + numVariabili;
+
+                List<Label> labelsToRemove = labelVincoli.GetRange(labelVincoli.Count - (numVincoli * differenza), numVincoli * differenza);
+
+                // Rimuovi gli elementi dalla lista
+                labelVincoli.RemoveRange(labelVincoli.Count - (numVincoli * differenza), numVincoli * differenza);
+
+                // Rimuovi gli elementi da panel1.Controls
+                foreach (Label labelToRemove in labelsToRemove)
+                {
+                    panel1.Controls.Remove(labelToRemove);
+                }
+
+                List<TextBox> textBoxesToRemove = textBoxVincoli.GetRange(textBoxVincoli.Count - (numVincoli * differenza), numVincoli * differenza);
+
+                // Rimuovi gli elementi dalla lista
+                textBoxVincoli.RemoveRange(textBoxVincoli.Count - (numVincoli * differenza), numVincoli * differenza);
+
+                // Rimuovi gli elementi da panel1.Controls
+                foreach (TextBox textBoxToRemove in textBoxesToRemove)
+                {
+                    panel1.Controls.Remove(textBoxToRemove);
+                }
+                
+                labelsToRemove = labelVincoli.GetRange(labelVincoli.Count - numVincoli, numVincoli);
+
+                // Rimuovi il " +" dagli elementi della lista
+                foreach (Label labelToRemove in labelsToRemove)
+                {
+                    labelToRemove.Text = labelToRemove.Text.TrimEnd(' ', '+');
+                }
+
+
+                foreach (ComboBox comboBox in comboBoxSegniVincoli)
+                {
+                    comboBox.Location = new Point(comboBox.Location.X - (differenza * 120), comboBox.Location.Y);
+                }
+
+                foreach (TextBox textBox in textBoxKnownTerms)
+                {
+                    textBox.Location = new Point(textBox.Location.X - (differenza * 120), textBox.Location.Y);
+                }
+
                 
             }
-            
+
         }
 
         private void numericUpDown_totalConstraints_ValueChanged(object sender, EventArgs e)

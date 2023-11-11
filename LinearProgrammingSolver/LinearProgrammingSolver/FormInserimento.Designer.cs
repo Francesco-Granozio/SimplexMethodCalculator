@@ -162,6 +162,11 @@
             this.numericUpDown_totalConstraints.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
             this.numericUpDown_totalConstraints.Font = new System.Drawing.Font("Segoe UI", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.numericUpDown_totalConstraints.Location = new System.Drawing.Point(429, 25);
+            this.numericUpDown_totalConstraints.Maximum = new decimal(new int[] {
+            99,
+            0,
+            0,
+            0});
             this.numericUpDown_totalConstraints.Minimum = new decimal(new int[] {
             1,
             0,
@@ -182,6 +187,11 @@
             this.numericUpDown_totalVariables.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
             this.numericUpDown_totalVariables.Font = new System.Drawing.Font("Segoe UI", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.numericUpDown_totalVariables.Location = new System.Drawing.Point(196, 23);
+            this.numericUpDown_totalVariables.Maximum = new decimal(new int[] {
+            99,
+            0,
+            0,
+            0});
             this.numericUpDown_totalVariables.Minimum = new decimal(new int[] {
             1,
             0,
