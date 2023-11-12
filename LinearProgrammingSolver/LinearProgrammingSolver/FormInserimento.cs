@@ -26,6 +26,8 @@ namespace LinearProgrammingSolver
         private List<ComboBox> comboBoxSegniVincoli = new List<ComboBox>();
         private List<TextBox> textBoxKnownTerms = new List<TextBox>();
 
+        private Random random = new Random();
+
         public FormInserimento()
         {
             InitializeComponent();
@@ -34,7 +36,6 @@ namespace LinearProgrammingSolver
 
         private TextBox CreateCoefficientTextBox(int x, int y, int xOffset, int yOffset)
         {
-            Random random = new Random();
             return new TextBox
             {
                 Name = $"textBoxVariabile{xOffset}",
@@ -103,17 +104,9 @@ namespace LinearProgrammingSolver
                 TextBox textBoxVariable = CreateCoefficientTextBox(168, 78, i, 0);
                 Label labelVariable = CreateCoefficientLabel(218, 80, i, 0);
 
-                equationControls.AddVariable("x" + (i + 1), textBoxVariable, labelVariable);
-
-                textBoxVariabiliFunzioneObiettivo.Add(textBoxVariable);
-                labelVariabiliFunzioneObiettivo.Add(labelVariable);
-
-
-                // Add the label and textbox to the panel
-                panel1.Controls.Add(labelVariable);
-                panel1.Controls.Add(textBoxVariable);
-
+                equationControls.AddVariable("x" + (i + 1), textBoxVariable, labelVariable, panel1);
             }
+
             linearProgrammingProblemControls.ObjectiveFunctionControls = equationControls;
 
             for (int i = 0; i < numVincoli; i++)
@@ -121,43 +114,24 @@ namespace LinearProgrammingSolver
                 ComboBox comboBoxSegnoVincolo = CreateInequalitySignComboBox(370, 148, 0, i);
                 TextBox textBoxKnownTerm = CreateCoefficientTextBox(430, 148, 0, i);
 
-
+                
                 InequalityControls inequalityControls = new InequalityControls();
-                inequalityControls.ComboboxSign = comboBoxSegnoVincolo;
-                inequalityControls.TextBoxKnownTerm = textBoxKnownTerm;
-
+                inequalityControls.AddInequalityControls(comboBoxSegnoVincolo, textBoxKnownTerm, panel1);
 
                 for (int j = 0; j < numVariabili; j++)
                 {
-                    TextBox textBoxVariable = CreateCoefficientTextBox(45, 150, i, j);
-                    Label labelVariable = CreateCoefficientLabel(95, 152, i, j);
-
-                    inequalityControls.AddVariable("x" + (j + 1), textBoxVariable, labelVariable);
-
-                    textBoxVincoli.Add(textBoxVariable);
-                    labelVincoli.Add(labelVariable);
-
-                    // Add the label and textbox to the panel
-                    panel1.Controls.Add(labelVariable);
-                    panel1.Controls.Add(textBoxVariable);
-
+                    TextBox textBoxVariable = CreateCoefficientTextBox(45, 150, j, i);
+                    Label labelVariable = CreateCoefficientLabel(95, 152, j, i);
+                    
+                    inequalityControls.AddVariable("x" + (j + 1), textBoxVariable, labelVariable, panel1);
                 }
-
-                comboBoxSegniVincoli.Add(comboBoxSegnoVincolo);
-                textBoxKnownTerms.Add(textBoxKnownTerm);
-
-                panel1.Controls.Add(comboBoxSegnoVincolo);
-                panel1.Controls.Add(textBoxKnownTerm);
-
                 linearProgrammingProblemControls.AddConstraintControls(inequalityControls);
             }
-
-            Console.WriteLine(linearProgrammingProblemControls);
 
             comboBox_function.SelectedItem = "max";
             comboBox1.SelectedItem = "≤";
 
-            List<decimal> objectiveCoefficients = new List<decimal> { 4, 2, 1 };
+            /*List<decimal> objectiveCoefficients = new List<decimal> { 4, 2, 1 };
             Inequality[] constraints = new Inequality[]
             {
                 new Inequality(new List<decimal> { -3, 1 }, InequalitySign.LessThanOrEqual, 1),
@@ -165,13 +139,13 @@ namespace LinearProgrammingSolver
                 new Inequality(new List<decimal> { -1, 1, 1 }, InequalitySign.LessThanOrEqual, 3)
             };
 
-            /*List<decimal> objectiveCoefficients = new List<decimal> { 3, 9, -3 };
+            List<decimal> objectiveCoefficients = new List<decimal> { 3, 9, -3 };
             Inequality[] constraints = new Inequality[]
             {
                 new Inequality(new List<decimal> { 1, -1/3m, 2/3m }, InequalitySign.LessThanOrEqual, 1),
                 new Inequality(new List<decimal> { -4, 4, 4 }, InequalitySign.LessThanOrEqual, 8),
                 new Inequality(new List<decimal> { -3, 0, 2 }, InequalitySign.LessThanOrEqual, 4)
-            };*/
+            };
 
 
             LinearProgrammingProblem lp = new LinearProgrammingProblem(
@@ -184,7 +158,7 @@ namespace LinearProgrammingSolver
             SimplexSolver solver = new SimplexSolver(lp);
             solver.Solve();
             //Console.WriteLine(solver);
-
+            */
         }
 
         private void numericUpDown_totalVariables_ValueChanged(object sender, EventArgs e)
@@ -326,8 +300,12 @@ namespace LinearProgrammingSolver
 
             if (oldValue < numVincoli)
             {
+                InequalityControls inequalityControls = null;
+                
                 for (int i = 0; i < differenza; i++)
                 {
+                    inequalityControls = new InequalityControls();
+                    
                     ComboBox comboBoxSegnoVincolo = CreateInequalitySignComboBox(370, 148, 0, i + oldValue);
                     TextBox textBoxKnownTerm = CreateCoefficientTextBox(430, 148, 0, i + oldValue);
 
@@ -336,63 +314,24 @@ namespace LinearProgrammingSolver
                         TextBox textBoxVariable = CreateCoefficientTextBox(45, 150, j, i + oldValue);
                         Label labelVariable = CreateCoefficientLabel(95, 152, j, i + oldValue);
 
-                        textBoxVincoli.Add(textBoxVariable);
-                        labelVincoli.Add(labelVariable);
-
-                        // Add the label and textbox to the panel
-                        panel1.Controls.Add(labelVariable);
-                        panel1.Controls.Add(textBoxVariable);
-
+                        inequalityControls.AddVariable("x" + (j + 1), textBoxVariable, labelVariable, panel1);
                     }
 
-                    comboBoxSegniVincoli.Add(comboBoxSegnoVincolo);
-                    textBoxKnownTerms.Add(textBoxKnownTerm);
-
-                    panel1.Controls.Add(comboBoxSegnoVincolo);
-                    panel1.Controls.Add(textBoxKnownTerm);
+                    inequalityControls.AddInequalityControls(comboBoxSegnoVincolo, textBoxKnownTerm, panel1);
                 }
+                linearProgrammingProblemControls.AddConstraintControls(inequalityControls);
             }
-            
+
             else if (oldValue > numVincoli)
             {
-
-                for (int j = 0; j < labelVincoli.Count; j++)
-                {
-                    Console.WriteLine(labelVincoli[j]);
-                }
-
-                for (int i = 0; i < differenza; i++)
-                {
-                    for (int j = 0; j < numVariabili; j++)
-                    {
-
-                        Console.WriteLine(textBoxVincoli.Count + j - 1 - numVariabili * j);
-
-
-                        RemoveElement(textBoxVincoli, panel1, textBoxVincoli.Count + j - 1 - numVariabili * j);
-                        RemoveElement(labelVincoli, panel1, labelVincoli.Count + j - 1 - numVariabili * j);
-
-                        
-                    }
-
-                    RemoveElement(comboBoxSegniVincoli, panel1, comboBoxSegniVincoli.Count - 1);
-                    RemoveElement(textBoxKnownTerms, panel1, textBoxKnownTerms.Count - 1);
-
-                }
-            }
-
-
-        }
-
-        private void RemoveElement<T>(List<T> list, Panel panel, int index) where T : Control
-        {
-            if (index >= 0 && index < list.Count)
-            {
-                T removedControl = list[index];
-                list.RemoveAt(index);
-                panel.Controls.Remove(removedControl);
-            }
                 
+                linearProgrammingProblemControls.RemoveLastConstraintControls(panel1);
+                
+            }
+
+
         }
+
+       
     }
 }

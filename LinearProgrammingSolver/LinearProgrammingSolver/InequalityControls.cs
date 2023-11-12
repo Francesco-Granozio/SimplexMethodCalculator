@@ -9,11 +9,20 @@ namespace LinearProgrammingSolver
 {
     internal class InequalityControls : EquationControls
     {
-        public ComboBox ComboboxSign { get; set; }
-        public TextBox TextBoxKnownTerm { get; set; }
+        public ComboBox ComboboxSign { get; private set; }
+        public TextBox TextBoxKnownTerm { get; private set; }
 
         public InequalityControls() : base()
         {
+        }
+
+        public void AddInequalityControls(ComboBox comboBox, TextBox textBox, Panel panel)
+        {
+            ComboboxSign = comboBox;
+            TextBoxKnownTerm = textBox;
+
+            panel.Controls.Add(comboBox);
+            panel.Controls.Add(textBox);
         }
 
         public override string ToString()

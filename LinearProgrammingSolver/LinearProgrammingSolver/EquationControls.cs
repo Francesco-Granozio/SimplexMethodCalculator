@@ -9,7 +9,7 @@ namespace LinearProgrammingSolver
 {
     internal class EquationControls
     {
-        protected Dictionary<string, (TextBox, Label)> variableControls { get; set; }
+        public Dictionary<string, (TextBox, Label)> variableControls { get; set; }
         public int Count { get => variableControls.Count; }
 
         public EquationControls()
@@ -17,14 +17,32 @@ namespace LinearProgrammingSolver
             variableControls = new Dictionary<string, (TextBox, Label)>();
         }
 
-        public void AddVariable(string variableName, TextBox textBox, Label label)
+        public void AddVariable(string variableName, TextBox textBox, Label label, Panel panel)
         {
             variableControls.Add(variableName, (textBox, label));
+            panel.Controls.Add(textBox);
+            panel.Controls.Add(label);
         }
 
-        public void RemoveVariable(string variableName)
+        public void RemoveVariable(string variableName, Panel panel)
         {
-            variableControls.Remove(variableName);
+            if (variableControls.TryGetValue(variableName, out var controls))
+            {
+                TextBox textBox = controls.Item1;
+                Label label = controls.Item2;
+
+                // Rimuovi i controlli dal pannello
+                panel.Controls.Remove(textBox);
+                panel.Controls.Remove(label);
+
+                // Rimuovi la variabile dal dizionario
+                variableControls.Remove(variableName);
+            }
+        }
+
+        public void RemoveAllVariables()
+        {
+            variableControls.Clear();
         }
 
         public override string ToString()

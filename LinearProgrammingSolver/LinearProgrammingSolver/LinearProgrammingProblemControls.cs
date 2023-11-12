@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 
 namespace LinearProgrammingSolver
 {
@@ -22,10 +23,34 @@ namespace LinearProgrammingSolver
             ConstraintsControls.Add(constraintControls);
         }
 
-        public void RemoveConstraintControls(InequalityControls constraintControls)
+        public void RemoveLastConstraintControls(Panel panel)
         {
-            ConstraintsControls.Remove(constraintControls);
+
+            InequalityControls constraintControls = ConstraintsControls.Last();
+            Console.WriteLine(constraintControls);
+
+            panel.Controls.Remove(constraintControls.ComboboxSign);
+            panel.Controls.Remove(constraintControls.TextBoxKnownTerm);
+
+            ConstraintsControls.RemoveAt(ConstraintsControls.Count - 1);
+
+            foreach (var variableControl in constraintControls.variableControls)
+            {
+                panel.Controls.Remove(variableControl.Value.Item1);
+                panel.Controls.Remove(variableControl.Value.Item2);
+            }
+            constraintControls.RemoveAllVariables();
+
+            Console.WriteLine(this);
         }
+
+
+        public InequalityControls GetConstraintControls(int index)
+        {
+            return ConstraintsControls[index];
+        }
+
+       
 
         public override string ToString()
         {
