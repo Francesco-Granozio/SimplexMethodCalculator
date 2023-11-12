@@ -40,6 +40,18 @@ namespace LinearProgrammingSolver
             }
         }
 
+        public (TextBox, Label) this[string variableName]
+        {
+            get
+            {
+                return variableControls[variableName];
+            }
+            set
+            {
+                variableControls[variableName] = value;
+            }
+        }
+
         public void RemoveAllVariables()
         {
             variableControls.Clear();

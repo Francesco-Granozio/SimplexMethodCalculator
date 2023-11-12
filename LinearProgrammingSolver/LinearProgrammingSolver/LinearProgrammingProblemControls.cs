@@ -18,6 +18,58 @@ namespace LinearProgrammingSolver
             ConstraintsControls = new List<InequalityControls>();
         }
 
+        public List<(TextBox, Label)> GetRow(int index)
+        {
+            List<(TextBox, Label)> row = new List<(TextBox, Label)>();
+
+            foreach (var constraintControl in ConstraintsControls)
+            {
+                row.Add(constraintControl["x" + index]);
+            }
+            return row;
+        }
+
+        public List<ComboBox> GetRowSigns() 
+        {
+            List<ComboBox> rowSigns = new List<ComboBox>();
+
+            foreach (var constraintControl in ConstraintsControls)
+            {
+                rowSigns.Add(constraintControl.ComboboxSign);
+            }
+            return rowSigns;
+        }
+
+        public List<TextBox> GetRowKnownTerms()
+        {
+            List<TextBox> rowKnownTerms = new List<TextBox>();
+
+            foreach (var constraintControl in ConstraintsControls)
+            {
+                rowKnownTerms.Add(constraintControl.TextBoxKnownTerm);
+            }
+            return rowKnownTerms;
+           
+        }
+
+        public void AddObjectiveFunctionVariable(string variableName, TextBox textBox, Label label, Panel panel)
+        {
+            ObjectiveFunctionControls.AddVariable(variableName, textBox, label, panel);
+        }
+
+        public void RemoveConstraintRow(int index, Panel panel)
+        {
+            foreach (var constraintControl in ConstraintsControls)
+            {
+                constraintControl.RemoveVariable("x" + index, panel);
+            }
+        }
+
+        public void RemoveObjectiveFunctionVariable(string variableName, Panel panel)
+        {
+            ObjectiveFunctionControls.RemoveVariable(variableName, panel);
+        }
+
         public void AddConstraintControls(InequalityControls constraintControls)
         {
             ConstraintsControls.Add(constraintControls);

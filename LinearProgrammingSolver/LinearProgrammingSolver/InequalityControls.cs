@@ -25,6 +25,8 @@ namespace LinearProgrammingSolver
             panel.Controls.Add(textBox);
         }
 
+     
+
         public override string ToString()
         {
             StringBuilder sb = new StringBuilder();
