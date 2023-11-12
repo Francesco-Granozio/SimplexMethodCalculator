@@ -25,9 +25,7 @@ namespace LinearProgrammingSolver
 
         public void RemoveLastConstraintControls(Panel panel)
         {
-
-            InequalityControls constraintControls = ConstraintsControls.Last();
-            Console.WriteLine(constraintControls);
+            InequalityControls constraintControls = ConstraintsControls[ConstraintsControls.Count - 1];
 
             panel.Controls.Remove(constraintControls.ComboboxSign);
             panel.Controls.Remove(constraintControls.TextBoxKnownTerm);
@@ -39,9 +37,9 @@ namespace LinearProgrammingSolver
                 panel.Controls.Remove(variableControl.Value.Item1);
                 panel.Controls.Remove(variableControl.Value.Item2);
             }
+            
             constraintControls.RemoveAllVariables();
 
-            Console.WriteLine(this);
         }
 
 

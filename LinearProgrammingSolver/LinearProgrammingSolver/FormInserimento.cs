@@ -304,11 +304,13 @@ namespace LinearProgrammingSolver
                 
                 for (int i = 0; i < differenza; i++)
                 {
-                    inequalityControls = new InequalityControls();
-                    
+
                     ComboBox comboBoxSegnoVincolo = CreateInequalitySignComboBox(370, 148, 0, i + oldValue);
                     TextBox textBoxKnownTerm = CreateCoefficientTextBox(430, 148, 0, i + oldValue);
-
+                    
+                    inequalityControls = new InequalityControls();
+                    inequalityControls.AddInequalityControls(comboBoxSegnoVincolo, textBoxKnownTerm, panel1);
+                    
                     for (int j = 0; j < numVariabili; j++)
                     {
                         TextBox textBoxVariable = CreateCoefficientTextBox(45, 150, j, i + oldValue);
@@ -316,19 +318,20 @@ namespace LinearProgrammingSolver
 
                         inequalityControls.AddVariable("x" + (j + 1), textBoxVariable, labelVariable, panel1);
                     }
-
-                    inequalityControls.AddInequalityControls(comboBoxSegnoVincolo, textBoxKnownTerm, panel1);
+                    linearProgrammingProblemControls.AddConstraintControls(inequalityControls);
                 }
-                linearProgrammingProblemControls.AddConstraintControls(inequalityControls);
+
+                Console.WriteLine(linearProgrammingProblemControls);
             }
 
             else if (oldValue > numVincoli)
             {
-                
-                linearProgrammingProblemControls.RemoveLastConstraintControls(panel1);
+                for (int i = 0; i < differenza; i++)
+                {
+                    linearProgrammingProblemControls.RemoveLastConstraintControls(panel1);
+                }
                 
             }
-
 
         }
 
