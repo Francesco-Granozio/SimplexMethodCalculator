@@ -6,11 +6,12 @@ using System.Threading.Tasks;
 
 namespace LinearProgrammingSolver
 {
-    internal class SimplexSolver
+    public class SimplexSolver
     {
-        private readonly LinearProgrammingProblem nonStandardLp;
-        private readonly LinearProgrammingProblem standardLp;
-        private bool hasObjectiveFunctionSignChanged = false;
+        public readonly LinearProgrammingProblem nonStandardLp;
+        public readonly LinearProgrammingProblem standardLp;
+        public bool HasObjectiveFunctionSignChanged { get; private set; } = false;
+            
         private CoefficientsMatrix coefficientsMatrix;
         private decimal[] cTransposed;
         private readonly List<int> baseVariables = new List<int>();
@@ -82,10 +83,11 @@ namespace LinearProgrammingSolver
 
             // innanzitutto controllo se la funzione è di max, e nel caso la trasformo in -min -f(x)
 
-            if (!standardLp.IsMinFunction && !hasObjectiveFunctionSignChanged)
+            if (!standardLp.IsMinFunction && !HasObjectiveFunctionSignChanged)
             {
-                hasObjectiveFunctionSignChanged = true;
+                HasObjectiveFunctionSignChanged = true;
                 standardLp.ObjectiveFunction.InvertSigns();
+                standardLp.IsMinFunction = true;
             }
 
             // trasformo le equazioni e i relativi termini noti >= 0
@@ -152,6 +154,7 @@ namespace LinearProgrammingSolver
                     for (int j = 0; j < numAddedVariables; j++)
                     {
                         standardLp.Costraints[i].Coefficients.Add(0);
+                        //standardLp.TotalVariables++; //verificare se è necessario
                     }
 
                     standardLp.Costraints[i].Coefficients.Add(1);
@@ -164,6 +167,7 @@ namespace LinearProgrammingSolver
                     for (int j = 0; j < numAddedVariables; j++)
                     {
                         standardLp.Costraints[i].Coefficients.Add(0);
+                        //standardLp.TotalVariables++; //verificare se è necessario
                     }
 
                     standardLp.Costraints[i].Coefficients.Add(-1);
@@ -180,6 +184,7 @@ namespace LinearProgrammingSolver
                 for (int j = 0; j < numZerosToAdd; j++, numZerosToAdd--)
                 {
                     standardLp.Costraints[i].Coefficients.Add(0);
+                    standardLp.TotalVariables++;
                 }
             }
         }
@@ -193,7 +198,7 @@ namespace LinearProgrammingSolver
 
             StringBuilder sb = new StringBuilder(nonStandardLp.ToString());
             sb.Append("\n\nconverted in standard form:\n\n");
-            sb.Append(hasObjectiveFunctionSignChanged ? standardLp.ToString().Replace("max ", "-min ") : standardLp.ToString());
+            sb.Append(HasObjectiveFunctionSignChanged ? standardLp.ToString().Replace("max ", "-min ") : standardLp.ToString());
 
             sb.Append("\n\nCoefficients matrix (A):\n\n");
             sb.Append(coefficientsMatrix);

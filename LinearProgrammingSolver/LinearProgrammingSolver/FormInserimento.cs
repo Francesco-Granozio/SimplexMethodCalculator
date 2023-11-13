@@ -161,8 +161,7 @@ namespace LinearProgrammingSolver
             //Console.WriteLine(solver);
             */
 
-            LinearProgrammingProblem linearProgrammingProblem = linearProgrammingProblemControls.ToLinearProgrammingProblem();
-            Console.WriteLine(linearProgrammingProblem);
+
         }
 
         private void numericUpDown_totalVariables_ValueChanged(object sender, EventArgs e)
@@ -304,6 +303,15 @@ namespace LinearProgrammingSolver
                     linearProgrammingProblemControls.RemoveLastConstraintControls(panel1);
                 }
             }
+        }
+
+        private void button_solve_Click(object sender, EventArgs e)
+        {
+            LinearProgrammingProblem linearProgrammingProblem = linearProgrammingProblemControls.ToLinearProgrammingProblem();
+
+            FormRisoluzione formRisoluzione = new FormRisoluzione(linearProgrammingProblem);
+            formRisoluzione.Show();
+
         }
     }
 }

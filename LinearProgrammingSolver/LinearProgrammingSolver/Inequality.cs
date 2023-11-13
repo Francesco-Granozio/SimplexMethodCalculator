@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace LinearProgrammingSolver
 {
-    internal class Inequality : Equation
+    public class Inequality : Equation
     {
         public InequalitySign InequalityType { get; set; }
 

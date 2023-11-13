@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace LinearProgrammingSolver
 {
-    internal class Equation
+    public class Equation
     {
         public List<decimal> Coefficients { get; set; }
         public decimal KnownTerm { get; set; }

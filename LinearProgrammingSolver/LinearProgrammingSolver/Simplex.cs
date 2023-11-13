@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace LinearProgrammingSolver
 {
-    internal class Simplex
+    public class Simplex
     {
         private readonly CoefficientsMatrix coefficientsMatrix;
         private readonly decimal[] cTransposed;

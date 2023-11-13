@@ -7,7 +7,7 @@ using System.Windows.Forms;
 
 namespace LinearProgrammingSolver
 {
-    internal class EquationControls
+    public class EquationControls
     {
         public Dictionary<string, (TextBox, Label)> variableControls { get; set; }
         public int Count { get => variableControls.Count; }
@@ -73,7 +73,7 @@ namespace LinearProgrammingSolver
         }
     }
 
-    internal static class EquationMapper
+    public static class EquationMapper
     {
         public static Equation ToEquation(this EquationControls equationControls)
         {

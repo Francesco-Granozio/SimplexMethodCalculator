@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace LinearProgrammingSolver
 {
-    internal class CoefficientsMatrix
+    public class CoefficientsMatrix
     {
         public decimal[,] Coefficients { get; set; }
         public int TotalRows { get => Coefficients.GetLength(0); }
@@ -14,6 +14,9 @@ namespace LinearProgrammingSolver
 
         public CoefficientsMatrix(LinearProgrammingProblem lp)
         {
+            Console.WriteLine("CoefficientsMatrix(LinearProgrammingProblem lp)");
+            Console.WriteLine(lp);
+
             int numConstraints = lp.Costraints.Length;
             int numVariables = lp.TotalVariables;
 
@@ -130,7 +133,7 @@ namespace LinearProgrammingSolver
 
     }
 
-    internal static class CoefficientsMatrixExtension
+    public static class CoefficientsMatrixExtension
     {
 
         public static decimal[] Multiply(this CoefficientsMatrix matrix, decimal[] vector)

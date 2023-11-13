@@ -7,7 +7,7 @@ using System.Windows.Forms;
 
 namespace LinearProgrammingSolver
 {
-    internal class LinearProgrammingProblemControls
+    public class LinearProgrammingProblemControls
     {
         public EquationControls ObjectiveFunctionControls { get; set; }
         public List<InequalityControls> ConstraintsControls { get; set; }
@@ -127,16 +127,11 @@ namespace LinearProgrammingSolver
         }
     }
 
-    internal static class LinearProgrammingProblemMapper
+    public static class LinearProgrammingProblemMapper
     {
         public static LinearProgrammingProblem ToLinearProgrammingProblem(this LinearProgrammingProblemControls linearProgrammingProblemControls)
         {
-            bool isMinFunction = false;
-            
-            if ((string)linearProgrammingProblemControls.ObjectiveFunctionComboBox.SelectedItem == "min")
-            {
-                isMinFunction = true;
-            }
+            bool isMinFunction = (string)linearProgrammingProblemControls.ObjectiveFunctionComboBox.SelectedItem == "min";
 
             Inequality[] inequalities = linearProgrammingProblemControls.ConstraintsControls.Select(x => x.ToInequality()).ToArray();
 

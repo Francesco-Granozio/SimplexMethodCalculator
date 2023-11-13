@@ -7,7 +7,7 @@ using System.Windows.Forms;
 
 namespace LinearProgrammingSolver
 {
-    internal class InequalityControls : EquationControls
+    public class InequalityControls : EquationControls
     {
         public ComboBox ComboboxSign { get; private set; }
         public TextBox TextBoxKnownTerm { get; private set; }
@@ -48,7 +48,7 @@ namespace LinearProgrammingSolver
         }
     }
 
-    internal static class InequalityMapper
+    public static class InequalityMapper
     {
         public static Inequality ToInequality(this InequalityControls inequalityControls)
         {

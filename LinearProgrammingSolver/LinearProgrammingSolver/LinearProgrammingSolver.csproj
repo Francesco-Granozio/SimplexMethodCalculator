@@ -52,6 +52,12 @@
     <Compile Include="CoefficientsMatrix.cs" />
     <Compile Include="Equation.cs" />
     <Compile Include="EquationControls.cs" />
+    <Compile Include="FormRisoluzione.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormRisoluzione.Designer.cs">
+      <DependentUpon>FormRisoluzione.cs</DependentUpon>
+    </Compile>
     <Compile Include="Inequality.cs" />
     <Compile Include="FormInserimento.cs">
       <SubType>Form</SubType>
@@ -69,6 +75,9 @@
     <Compile Include="SimplexSolver.cs" />
     <EmbeddedResource Include="FormInserimento.resx">
       <DependentUpon>FormInserimento.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FormRisoluzione.resx">
+      <DependentUpon>FormRisoluzione.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>

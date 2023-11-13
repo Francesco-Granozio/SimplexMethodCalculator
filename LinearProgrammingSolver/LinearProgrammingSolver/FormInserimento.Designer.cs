@@ -50,6 +50,7 @@
             this.label3 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.comboBox_function = new System.Windows.Forms.ComboBox();
+            this.button_solve = new System.Windows.Forms.Button();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown_totalConstraints)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown_totalVariables)).BeginInit();
@@ -59,6 +60,7 @@
             // 
             this.panel1.AutoScroll = true;
             this.panel1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
+            this.panel1.Controls.Add(this.button_solve);
             this.panel1.Controls.Add(this.textBox2);
             this.panel1.Controls.Add(this.label10);
             this.panel1.Controls.Add(this.textBox3);
@@ -336,6 +338,17 @@
             this.comboBox_function.Size = new System.Drawing.Size(72, 29);
             this.comboBox_function.TabIndex = 0;
             // 
+            // button_solve
+            // 
+            this.button_solve.Font = new System.Drawing.Font("Segoe UI", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.button_solve.Location = new System.Drawing.Point(531, 25);
+            this.button_solve.Name = "button_solve";
+            this.button_solve.Size = new System.Drawing.Size(79, 33);
+            this.button_solve.TabIndex = 31;
+            this.button_solve.Text = "SOLVE";
+            this.button_solve.UseVisualStyleBackColor = true;
+            this.button_solve.Click += new System.EventHandler(this.button_solve_Click);
+            // 
             // FormInserimento
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -379,6 +392,7 @@
         private System.Windows.Forms.Label label12;
         private System.Windows.Forms.TextBox textBox10;
         private System.Windows.Forms.Label label13;
+        private System.Windows.Forms.Button button_solve;
     }
 }
 

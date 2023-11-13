@@ -6,10 +6,10 @@ using System.Threading.Tasks;
 
 namespace LinearProgrammingSolver
 {
-    internal class LinearProgrammingProblem
+    public class LinearProgrammingProblem
     {
         public Equation ObjectiveFunction { get; private set; }
-        public bool IsMinFunction { get; private set; }
+        public bool IsMinFunction { get; set; }
         public Inequality[] Costraints { get; set; } 
         public int TotalVariables { get; set; }
         public int TotalCostraints { get; private set; }
