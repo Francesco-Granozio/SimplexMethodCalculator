@@ -12,4 +12,23 @@ namespace LinearProgrammingSolver
         GreaterThanOrEqual, // >=
         Equal              // =
     }
+
+    public static class InequalitySignMapper
+    {
+        public static InequalitySign ToInequalitySign(this string sign)
+        {
+            switch (sign)
+            {
+                case "<=":
+                    return InequalitySign.LessThanOrEqual;
+                case ">=":
+                    return InequalitySign.GreaterThanOrEqual;
+                case "=":
+                    return InequalitySign.Equal;
+                default:
+                    throw new ArgumentException($"Invalid inequality sign: {sign}");
+            }
+        }
+    }
+
 }

@@ -125,8 +125,12 @@ namespace LinearProgrammingSolver
                 linearProgrammingProblemControls.AddConstraintControls(inequalityControls);
             }
 
+            linearProgrammingProblemControls.ObjectiveFunctionComboBox = comboBox_function;
+            linearProgrammingProblemControls.TotalVariables = numVariabili;
+            linearProgrammingProblemControls.TotalConstraints = numVincoli;
             comboBox_function.SelectedItem = "max";
             comboBox1.SelectedItem = "≤";
+
 
             /*List<decimal> objectiveCoefficients = new List<decimal> { 4, 2, 1 };
             Inequality[] constraints = new Inequality[]
@@ -156,6 +160,9 @@ namespace LinearProgrammingSolver
             solver.Solve();
             //Console.WriteLine(solver);
             */
+
+            LinearProgrammingProblem linearProgrammingProblem = linearProgrammingProblemControls.ToLinearProgrammingProblem();
+            Console.WriteLine(linearProgrammingProblem);
         }
 
         private void numericUpDown_totalVariables_ValueChanged(object sender, EventArgs e)
@@ -163,6 +170,7 @@ namespace LinearProgrammingSolver
             // Ottieni il nuovo numero di variabili
             int oldValue = numVariabili;
             numVariabili = (int)numericUpDown_totalVariables.Value;
+            linearProgrammingProblemControls.TotalVariables = numVariabili;
             int differenza = Math.Abs(numVariabili - oldValue);
             
             if (oldValue < numVariabili)
@@ -262,6 +270,7 @@ namespace LinearProgrammingSolver
             numVariabili = (int)numericUpDown_totalVariables.Value;
             int oldValue = numVincoli;
             numVincoli = (int)numericUpDown_totalConstraints.Value;
+            linearProgrammingProblemControls.TotalConstraints = numVincoli;
             int differenza = Math.Abs(numVincoli - oldValue);
 
             if (oldValue < numVincoli)

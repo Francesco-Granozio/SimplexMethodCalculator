@@ -11,6 +11,10 @@ namespace LinearProgrammingSolver
     {
         public EquationControls ObjectiveFunctionControls { get; set; }
         public List<InequalityControls> ConstraintsControls { get; set; }
+        public ComboBox ObjectiveFunctionComboBox { get; set; }
+
+        public int TotalVariables { get; set; }
+        public int TotalConstraints { get; set; }
 
         public LinearProgrammingProblemControls()
         {
@@ -29,7 +33,7 @@ namespace LinearProgrammingSolver
             return row;
         }
 
-        public List<ComboBox> GetRowSigns() 
+        public List<ComboBox> GetRowSigns()
         {
             List<ComboBox> rowSigns = new List<ComboBox>();
 
@@ -49,7 +53,7 @@ namespace LinearProgrammingSolver
                 rowKnownTerms.Add(constraintControl.TextBoxKnownTerm);
             }
             return rowKnownTerms;
-           
+
         }
 
         public void AddObjectiveFunctionVariable(string variableName, TextBox textBox, Label label, Panel panel)
@@ -89,7 +93,7 @@ namespace LinearProgrammingSolver
                 panel.Controls.Remove(variableControl.Value.Item1);
                 panel.Controls.Remove(variableControl.Value.Item2);
             }
-            
+
             constraintControls.RemoveAllVariables();
 
         }
@@ -100,7 +104,7 @@ namespace LinearProgrammingSolver
             return ConstraintsControls[index];
         }
 
-       
+
 
         public override string ToString()
         {
@@ -120,6 +124,27 @@ namespace LinearProgrammingSolver
             }
 
             return sb.ToString();
+        }
+    }
+
+    internal static class LinearProgrammingProblemMapper
+    {
+        public static LinearProgrammingProblem ToLinearProgrammingProblem(this LinearProgrammingProblemControls linearProgrammingProblemControls)
+        {
+            bool isMinFunction = false;
+            
+            if ((string)linearProgrammingProblemControls.ObjectiveFunctionComboBox.SelectedItem == "min")
+            {
+                isMinFunction = true;
+            }
+
+            Inequality[] inequalities = linearProgrammingProblemControls.ConstraintsControls.Select(x => x.ToInequality()).ToArray();
+
+            LinearProgrammingProblem linearProgrammingProblem = 
+                new LinearProgrammingProblem(linearProgrammingProblemControls.ObjectiveFunctionControls.ToEquation(), isMinFunction, 
+                inequalities, linearProgrammingProblemControls.TotalVariables, linearProgrammingProblemControls.TotalConstraints);
+
+            return linearProgrammingProblem;
         }
     }
 }

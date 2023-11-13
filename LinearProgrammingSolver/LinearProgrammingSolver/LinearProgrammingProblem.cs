@@ -74,5 +74,6 @@ namespace LinearProgrammingSolver
             return sb.ToString();
         }
     }
+
 }
 
