@@ -17,14 +17,8 @@ namespace LinearProgrammingSolver
 
         private int numVariabili;
         private int numVincoli;
-        private List<TextBox> textBoxVariabiliFunzioneObiettivo = new List<TextBox>();
-        private List<Label> labelVariabiliFunzioneObiettivo = new List<Label>();
-
-        private List<TextBox> textBoxVincoli = new List<TextBox>();
-        private List<Label> labelVincoli = new List<Label>();
-
-        private List<ComboBox> comboBoxSegniVincoli = new List<ComboBox>();
-        private List<TextBox> textBoxKnownTerms = new List<TextBox>();
+        private static readonly int STARTING_VARIABLES = 3;
+        private static readonly int STARTING_CONSTRAINTS = 3; 
 
         private Random random = new Random();
 
@@ -94,6 +88,9 @@ namespace LinearProgrammingSolver
 
         private void FormInserimento_Load(object sender, EventArgs e)
         {
+            numericUpDown_totalVariables.Value = STARTING_VARIABLES;
+            numericUpDown_totalConstraints.Value = STARTING_CONSTRAINTS;
+            
             numVariabili = (int)numericUpDown_totalVariables.Value;
             numVincoli = (int)numericUpDown_totalConstraints.Value;
             EquationControls equationControls = new EquationControls();
@@ -179,11 +176,9 @@ namespace LinearProgrammingSolver
                 {
                     // Crea un nuovo textbox e aggiungilo alla lista
                     TextBox textBox = CreateCoefficientTextBox(168, 78, i, 0);
-                    textBoxVariabiliFunzioneObiettivo.Add(textBox);
 
                     // Crea un nuovo label e imposta il suo testo
                     Label label = CreateCoefficientLabel(218, 80, i, 0);
-                    labelVariabiliFunzioneObiettivo.Add(label);
 
                     linearProgrammingProblemControls.AddObjectiveFunctionVariable("x" + (i + 1), textBox, label, panel1);
                 }
@@ -258,7 +253,6 @@ namespace LinearProgrammingSolver
                     textBox.Location = new Point(textBox.Location.X - (differenza * 120), textBox.Location.Y);
                 }
 
-
             }
 
         }
@@ -276,9 +270,8 @@ namespace LinearProgrammingSolver
                 
                 for (int i = 0; i < differenza; i++)
                 {
-
-                    ComboBox comboBoxSegnoVincolo = CreateInequalitySignComboBox(370, 148, 0, i + oldValue);
-                    TextBox textBoxKnownTerm = CreateCoefficientTextBox(430, 148, 0, i + oldValue);
+                    ComboBox comboBoxSegnoVincolo = CreateInequalitySignComboBox(370, 148, numVariabili - STARTING_VARIABLES, i + oldValue);
+                    TextBox textBoxKnownTerm = CreateCoefficientTextBox(430, 148, numVariabili - STARTING_VARIABLES, i + oldValue);
                     
                     inequalityControls = new InequalityControls();
                     inequalityControls.AddInequalityControls(comboBoxSegnoVincolo, textBoxKnownTerm, panel1);
