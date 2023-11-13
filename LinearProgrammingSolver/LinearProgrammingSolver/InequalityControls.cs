@@ -47,4 +47,20 @@ namespace LinearProgrammingSolver
             return sb.ToString();
         }
     }
+
+    internal static class InequalityMapper
+    {
+        public static Inequality ToInequality(this InequalityControls inequalityControls)
+        {
+            List<decimal> coefficients = new List<decimal>();
+
+            foreach (var item in inequalityControls.variableControls)
+            {
+                coefficients.Add(decimal.Parse(item.Value.Item1.Text));
+            }
+
+
+            return new Inequality(coefficients, inequalityControls.ComboboxSign.Text.ToInequalitySign(), decimal.Parse(inequalityControls.TextBoxKnownTerm.Text));
+        }
+    }
 }

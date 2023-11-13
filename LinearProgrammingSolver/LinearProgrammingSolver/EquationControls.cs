@@ -72,4 +72,18 @@ namespace LinearProgrammingSolver
             return sb.ToString();
         }
     }
+
+    internal static class EquationMapper
+    {
+        public static Equation ToEquation(this EquationControls equationControls)
+        {
+            List<decimal> coefficients = new List<decimal>();
+
+            foreach (var item in equationControls.variableControls)
+            {
+                coefficients.Add(decimal.Parse(item.Value.Item1.Text));
+            }
+            return new Equation(coefficients);
+        }
+    }
 }
