@@ -177,14 +177,15 @@ namespace LinearProgrammingSolver
                 }
             }
 
+
             // Aggiungi zeri rimanenti solo dopo l'aggiunta delle variabili di slack/surplus
 
-            for (int i = 0, numZerosToAdd = standardLp.TotalVariables - nonStandardLp.TotalVariables; i < numConstraints; i++)
+            for (int i = 0, numZerosToAdd = numAddedVariables - 1; i < numConstraints; i++, numZerosToAdd--)
             {
-                for (int j = 0; j < numZerosToAdd; j++, numZerosToAdd--)
+                Console.WriteLine(numZerosToAdd);
+                for (int j = 0; j < numZerosToAdd; j++)
                 {
                     standardLp.Costraints[i].Coefficients.Add(0);
-                    standardLp.TotalVariables++;
                 }
             }
         }
