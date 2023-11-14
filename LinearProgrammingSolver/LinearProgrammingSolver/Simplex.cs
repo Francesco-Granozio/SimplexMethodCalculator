@@ -15,7 +15,7 @@ namespace LinearProgrammingSolver
         private readonly decimal[] c_b_Transposed;
         private readonly CoefficientsMatrix A_b_Inverse;
         private readonly decimal[] knownTerms;
-
+        
         public Simplex(CoefficientsMatrix coefficientsMatrix, decimal[] cTransposed, List<int> baseVariables, List<int> nonBaseVariables,
             decimal[] c_b_Transposed, CoefficientsMatrix A_b, CoefficientsMatrix A_b_Inverse, decimal[] knownTerms)
         {

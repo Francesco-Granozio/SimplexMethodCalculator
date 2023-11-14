@@ -11,9 +11,9 @@ namespace LinearProgrammingSolver
         public readonly LinearProgrammingProblem nonStandardLp;
         public readonly LinearProgrammingProblem standardLp;
         public bool HasObjectiveFunctionSignChanged { get; private set; } = false;
-            
-        private CoefficientsMatrix coefficientsMatrix;
-        private decimal[] cTransposed;
+
+        public CoefficientsMatrix CoefficientsMatrix { get; private set; }
+        public decimal[] CTransposed { get; private set; }
         private readonly List<int> baseVariables = new List<int>();
         private readonly List<int> nonBaseVariables = new List<int>();
         private decimal[] c_b_Transposed;
@@ -44,7 +44,7 @@ namespace LinearProgrammingSolver
             A_b_Inverse = A_b.Clone().Invert();
 
 
-            Simplex simplex = new Simplex(coefficientsMatrix, cTransposed, baseVariables, nonBaseVariables, c_b_Transposed, A_b, A_b_Inverse, standardLp.KnownTerms);
+            Simplex simplex = new Simplex(CoefficientsMatrix, CTransposed, baseVariables, nonBaseVariables, c_b_Transposed, A_b, A_b_Inverse, standardLp.KnownTerms);
 
             (bool isOptimal, int index, decimal value) = simplex.OptTest();
 
@@ -72,9 +72,9 @@ namespace LinearProgrammingSolver
         {
             //costruisco la matrice dei coefficienti tecnologici e il vettore c dei coefficienti di costo
 
-            coefficientsMatrix = new CoefficientsMatrix(standardLp);
+            CoefficientsMatrix = new CoefficientsMatrix(standardLp);
 
-            cTransposed = standardLp.ObjectiveFunction.Coefficients.Concat(
+            CTransposed = standardLp.ObjectiveFunction.Coefficients.Concat(
                 Enumerable.Repeat(0m, standardLp.TotalVariables - standardLp.ObjectiveFunction.TotalVariables)).ToArray();
         }
 
@@ -107,12 +107,12 @@ namespace LinearProgrammingSolver
 
         private void FindBase()
         {
-            int numCols = coefficientsMatrix.TotalColumns;
+            int numCols = CoefficientsMatrix.TotalColumns;
             int identityMatrixSize = standardLp.Costraints.Length;
             
             for (int i = 0; i < numCols; i++)
             {
-                decimal[] currentColumn = coefficientsMatrix.GetColumn(i);
+                decimal[] currentColumn = CoefficientsMatrix.GetColumn(i);
 
                 for (int rowIndex = 0; rowIndex < identityMatrixSize; rowIndex++)
                 {
@@ -139,7 +139,7 @@ namespace LinearProgrammingSolver
                     nonBaseVariables.Add(i);
                 }
             }
-            c_b_Transposed = cTransposed.Where((x, i) => baseVariables.Contains(i)).ToArray();
+            c_b_Transposed = CTransposed.Where((x, i) => baseVariables.Contains(i)).ToArray();
         }
 
         private void AddSlackAndSurplusVariables()
@@ -182,7 +182,6 @@ namespace LinearProgrammingSolver
 
             for (int i = 0, numZerosToAdd = numAddedVariables - 1; i < numConstraints; i++, numZerosToAdd--)
             {
-                Console.WriteLine(numZerosToAdd);
                 for (int j = 0; j < numZerosToAdd; j++)
                 {
                     standardLp.Costraints[i].Coefficients.Add(0);
@@ -202,10 +201,10 @@ namespace LinearProgrammingSolver
             sb.Append(HasObjectiveFunctionSignChanged ? standardLp.ToString().Replace("max ", "-min ") : standardLp.ToString());
 
             sb.Append("\n\nCoefficients matrix (A):\n\n");
-            sb.Append(coefficientsMatrix);
+            sb.Append(CoefficientsMatrix);
 
             sb.Append("\n\nCost coefficients (c^T):\n\n");
-            sb.Append("[").Append(cTransposed.Any() ? string.Join(", ", cTransposed) : "").Append("]");
+            sb.Append("[").Append(CTransposed.Any() ? string.Join(", ", CTransposed) : "").Append("]");
 
             sb.Append("\n\nBase variables index:\n\n");
             sb.Append("[").Append(baseVariables.Any() ? string.Join(", ", baseVariables) : "").Append("]");

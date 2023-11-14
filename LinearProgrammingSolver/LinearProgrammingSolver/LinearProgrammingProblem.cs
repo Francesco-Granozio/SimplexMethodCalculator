@@ -45,7 +45,6 @@ namespace LinearProgrammingSolver
                     Costraints[i].Coefficients.AddRange(Enumerable.Repeat(0m, TotalVariables - Costraints[i].Coefficients.Count));
                 }
             }
-            Console.WriteLine(this);
         }
 
         public LinearProgrammingProblem Clone()

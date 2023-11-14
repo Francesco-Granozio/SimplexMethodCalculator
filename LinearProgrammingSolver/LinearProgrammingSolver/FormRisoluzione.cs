@@ -24,6 +24,7 @@ namespace LinearProgrammingSolver
         {
             SimplexSolver simplexSolver = new SimplexSolver(linearProgrammingProblem);
             simplexSolver.Solve();
+            Console.WriteLine(simplexSolver);
 
             richTextBox_original_problem.Text = simplexSolver.nonStandardLp.ToString();
             
@@ -33,6 +34,8 @@ namespace LinearProgrammingSolver
             }
 
             richTextBox_standard_form_problem.Text += simplexSolver.standardLp.ToString();
+            richTextBox_coefficients_matrix.Text = simplexSolver.CoefficientsMatrix.ToString();
+            richTextBox_c_transposed.Text = new StringBuilder().Append("[").Append(simplexSolver.CTransposed.Any() ? string.Join(", ", simplexSolver.CTransposed) : "").Append("]").ToString();
 
         }
     }

@@ -33,17 +33,6 @@ namespace LinearProgrammingSolver
 
         public CoefficientsMatrix(LinearProgrammingProblem lp, List<int> columns)
         {
-
-            Console.WriteLine("CoefficientsMatrix(LinearProgrammingProblem lp)");
-            Console.WriteLine(lp);
-
-            Console.WriteLine(new String('-', 80));
-
-            foreach (var column in columns)
-            {
-                Console.WriteLine($"column: {column}");
-            }
-
             int numConstraints = lp.Costraints.Length;
             int numVariables = columns.Count;
 
@@ -51,7 +40,6 @@ namespace LinearProgrammingSolver
 
             foreach (var constraint in lp.Costraints)
             {
-                Console.WriteLine(constraint);
                 int constraintIndex = Array.IndexOf(lp.Costraints, constraint);
                 
                 for (int i = 0; i < columns.Count; i++)
